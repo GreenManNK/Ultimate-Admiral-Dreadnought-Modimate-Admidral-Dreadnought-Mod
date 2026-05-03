@@ -1,0 +1,9 @@
+﻿# Keep this repository as a lightweight patch ledger.
+# Do not track game binaries or campaign saves.
+*.assets
+*.dll
+*.bin
+*.zip
+*.tmp
+*.log
+backup_*/

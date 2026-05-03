@@ -1,0 +1,26 @@
+﻿{
+  "snapshot_date": "2026-05-03",
+  "game_data_path": "F:\\SteamLibrary\\steamapps\\common\\Ultimate Admiral Dreadnoughts\\Ultimate Admiral Dreadnoughts_Data",
+  "save_path": "C:\\Users\\NITRO\\AppData\\LocalLow\\Game Labs\\Ultimate Admiral Dreadnoughts",
+  "protected_values": {
+    "shipyard_start": "15000000",
+    "campaign_max_year": "1950",
+    "cash_start_part": "500",
+    "cash_start_randomness": "0",
+    "ai_difficulty_easy_income_multiplier": "0.2",
+    "ai_difficulty_normal_income_multiplier": "0.25",
+    "ai_difficulty_hard_income_multiplier": "0.35",
+    "ai_difficulty_legendary_income_multiplier": "0.5",
+    "ai_difficulty_hard_tech_multiplier": "1",
+    "ai_difficulty_legendary_tech_multiplier": "1"
+  },
+  "save_hotfix_floor": {
+    "player_shipyard_tons": 15000000,
+    "player_funds_usd": 500000000000
+  },
+  "binary_files_not_tracked": [
+    "resources.assets",
+    "GameAssembly.dll",
+    "save_*.bin"
+  ]
+}
