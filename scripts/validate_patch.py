@@ -149,6 +149,34 @@ def main():
     if country_locked or needunlock or need["tower_main"] or need["tower_sec"] or need["funnel"]:
         raise AssertionError({"country_locked": country_locked, "needunlock": needunlock, "need": dict(need)})
 
+    hulls = [row for row in parts if data_name(row) and (row.get("type") or "").strip() == "hull"]
+    hull_bad_tonnage = []
+    hull_values = {}
+    for row in hulls:
+        try:
+            ton_min = float(row.get("tonnageMin") or 0)
+            ton_max = float(row.get("tonnageMax") or 0)
+        except ValueError:
+            hull_bad_tonnage.append((row.get("@name"), row.get("tonnageMin"), row.get("tonnageMax")))
+            continue
+        if ton_max < ton_min:
+            hull_bad_tonnage.append((row.get("@name"), ton_min, ton_max))
+        hull_values.setdefault(row.get("@name"), []).append(ton_max)
+    if len(hulls) != 518 or hull_bad_tonnage:
+        raise AssertionError({"hull_count": len(hulls), "bad_tonnage": hull_bad_tonnage[:10]})
+    representative_hull_values = {
+        "bb_7_bismarck": [250000.0],
+        "bb_6": [250000.0],
+        "bb_5": [216000.0],
+        "dd_1": [2475.0],
+        "tb_lowbow": [1125.0],
+        "tr": [45000.0],
+    }
+    for name, expected in representative_hull_values.items():
+        actual = hull_values.get(name)
+        if actual != expected:
+            raise AssertionError(f"hull tonnage {name}: expected {expected}, got {actual}")
+
     comp = dict_rows(texts["compTypes"])
     if any(data_name(row) and (row.get("shipTypes") or "").strip() for row in comp):
         raise AssertionError("compTypes shipTypes locks remain")

@@ -83,6 +83,20 @@
     "ship_training_points": 100,
     "surface_crew_level": 4
   },
+  "hull_tonnage_patch": {
+    "hull_count": 518,
+    "tonnageMax_multiplier": 1.5,
+    "tonnageMax_cap": 250000,
+    "tonnageMin_unchanged": true,
+    "representative_values": {
+      "bb_7_bismarck": 250000,
+      "bb_6": 250000,
+      "bb_5": 216000,
+      "dd_1": 2475,
+      "tb_lowbow": 1125,
+      "tr": 45000
+    }
+  },
   "binary_files_not_tracked": [
     "resources.assets",
     "GameAssembly.dll",
