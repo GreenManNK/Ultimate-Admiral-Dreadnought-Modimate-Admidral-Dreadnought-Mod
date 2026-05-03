@@ -85,16 +85,17 @@
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
-    "tonnageMax_multiplier": 1.5,
-    "tonnageMax_cap": 250000,
+    "tonnageMax_multiplier": 2.4,
+    "tonnageMax_cap": 400000,
     "tonnageMin_unchanged": true,
     "representative_values": {
-      "bb_7_bismarck": 250000,
-      "bb_6": 250000,
-      "bb_5": 216000,
-      "dd_1": 2475,
-      "tb_lowbow": 1125,
-      "tr": 45000
+      "bb_7_bismarck": 400000,
+      "bb_6": 400000,
+      "bb_6_iowa": 392400,
+      "bb_5": 345600,
+      "dd_1": 3960,
+      "tb_lowbow": 1800,
+      "tr": 72000
     }
   },
   "binary_files_not_tracked": [

@@ -12,7 +12,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
-- Hull tonnage limits raised safely: all existing hull `tonnageMax` values multiplied by 1.5 with a 250,000 ton cap; `tonnageMin` values left unchanged.
+- Hull tonnage limits raised safely: all existing hull `tonnageMax` values raised again with a 400,000 ton cap; `tonnageMin` values left unchanged.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.

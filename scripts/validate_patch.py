@@ -165,12 +165,13 @@ def main():
     if len(hulls) != 518 or hull_bad_tonnage:
         raise AssertionError({"hull_count": len(hulls), "bad_tonnage": hull_bad_tonnage[:10]})
     representative_hull_values = {
-        "bb_7_bismarck": [250000.0],
-        "bb_6": [250000.0],
-        "bb_5": [216000.0],
-        "dd_1": [2475.0],
-        "tb_lowbow": [1125.0],
-        "tr": [45000.0],
+        "bb_7_bismarck": [400000.0],
+        "bb_6": [400000.0],
+        "bb_6_iowa": [392400.0],
+        "bb_5": [345600.0],
+        "dd_1": [3960.0],
+        "tb_lowbow": [1800.0],
+        "tr": [72000.0],
     }
     for name, expected in representative_hull_values.items():
         actual = hull_values.get(name)
