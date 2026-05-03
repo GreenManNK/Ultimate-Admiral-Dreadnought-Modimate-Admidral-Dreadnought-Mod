@@ -1,22 +1,50 @@
-﻿{
+{
   "snapshot_date": "2026-05-03",
   "game_data_path": "F:\\SteamLibrary\\steamapps\\common\\Ultimate Admiral Dreadnoughts\\Ultimate Admiral Dreadnoughts_Data",
   "save_path": "C:\\Users\\NITRO\\AppData\\LocalLow\\Game Labs\\Ultimate Admiral Dreadnoughts",
   "protected_values": {
-    "shipyard_start": "15000000",
+    "shipyard_start": "12500",
+    "shipyard_start_increase": "250",
+    "shipyard_dev_cost": "30000",
+    "shipyard_dev_min_amount_tons": "500",
+    "shipyard_dev_max_amount_tons": "4000",
+    "shipyard_max_modifier": "6",
+    "shipyard_build_amount_max_modifier": "8",
     "campaign_max_year": "1950",
-    "cash_start_part": "500",
+    "cash_start_part": "0.0035",
     "cash_start_randomness": "0",
     "ai_difficulty_easy_income_multiplier": "0.2",
     "ai_difficulty_normal_income_multiplier": "0.25",
     "ai_difficulty_hard_income_multiplier": "0.35",
     "ai_difficulty_legendary_income_multiplier": "0.5",
-    "ai_difficulty_hard_tech_multiplier": "1",
-    "ai_difficulty_legendary_tech_multiplier": "1"
+    "ai_difficulty_easy_aggression_multiplier": "0.35",
+    "ai_difficulty_normal_aggression_multiplier": "0.45",
+    "ai_difficulty_hard_aggression_multiplier": "0.55",
+    "ai_difficulty_legendary_aggression_multiplier": "0.65",
+    "ai_difficulty_easy_tension_multiplier": "0.45",
+    "ai_difficulty_normal_tension_multiplier": "0.55",
+    "ai_difficulty_hard_tension_multiplier": "0.65",
+    "ai_difficulty_legendary_tension_multiplier": "0.75",
+    "ai_difficulty_hard_tech_multiplier": "0.75",
+    "ai_difficulty_legendary_tech_multiplier": "0.85",
+    "battle_avoid_threshold": "2",
+    "general_retreat_threshold": "0.35",
+    "ai_power_exp_factor": "0.25",
+    "ai_risk_exp_factor": "5",
+    "ai_aggressiveness_exp_factor": "0.2",
+    "ai_opponent_replacement_money": "0.25",
+    "ai_ship_gdp_ratio": "500000",
+    "override_shipybuilding_limit": "0.2",
+    "ai_shipyard_threshold_cost": "0.1",
+    "fleet_generation_chance": "5"
   },
   "save_hotfix_floor": {
     "player_shipyard_tons": 15000000,
     "player_funds_usd": 500000000000
+  },
+  "save_ai_caps": {
+    "ai_shipyard_tons": 50000,
+    "ai_funds_usd": 5000000000
   },
   "binary_files_not_tracked": [
     "resources.assets",

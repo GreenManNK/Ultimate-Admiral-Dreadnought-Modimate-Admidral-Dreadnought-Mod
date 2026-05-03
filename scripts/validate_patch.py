@@ -51,16 +51,40 @@ def main():
     params = dict_rows(texts["params"])
     pd = {row.get("@name"): row.get("value") for row in params if row.get("@name")}
     required = {
-        "shipyard_start": "15000000",
+        "shipyard_start": "12500",
+        "shipyard_start_increase": "250",
+        "shipyard_dev_cost": "30000",
+        "shipyard_dev_min_amount_tons": "500",
+        "shipyard_dev_max_amount_tons": "4000",
+        "shipyard_max_modifier": "6",
+        "shipyard_build_amount_max_modifier": "8",
         "campaign_max_year": "1950",
-        "cash_start_part": "500",
+        "cash_start_part": "0.0035",
         "cash_start_randomness": "0",
         "ai_difficulty_easy_income_multiplier": "0.2",
         "ai_difficulty_normal_income_multiplier": "0.25",
         "ai_difficulty_hard_income_multiplier": "0.35",
         "ai_difficulty_legendary_income_multiplier": "0.5",
-        "ai_difficulty_hard_tech_multiplier": "1",
-        "ai_difficulty_legendary_tech_multiplier": "1",
+        "ai_difficulty_easy_aggression_multiplier": "0.35",
+        "ai_difficulty_normal_aggression_multiplier": "0.45",
+        "ai_difficulty_hard_aggression_multiplier": "0.55",
+        "ai_difficulty_legendary_aggression_multiplier": "0.65",
+        "ai_difficulty_easy_tension_multiplier": "0.45",
+        "ai_difficulty_normal_tension_multiplier": "0.55",
+        "ai_difficulty_hard_tension_multiplier": "0.65",
+        "ai_difficulty_legendary_tension_multiplier": "0.75",
+        "ai_difficulty_hard_tech_multiplier": "0.75",
+        "ai_difficulty_legendary_tech_multiplier": "0.85",
+        "battle_avoid_threshold": "2",
+        "general_retreat_threshold": "0.35",
+        "ai_power_exp_factor": "0.25",
+        "ai_risk_exp_factor": "5",
+        "ai_aggressiveness_exp_factor": "0.2",
+        "ai_opponent_replacement_money": "0.25",
+        "ai_ship_gdp_ratio": "500000",
+        "override_shipybuilding_limit": "0.2",
+        "ai_shipyard_threshold_cost": "0.1",
+        "fleet_generation_chance": "5",
     }
     for key, expected in required.items():
         actual = pd.get(key)
@@ -90,19 +114,47 @@ def main():
         raise AssertionError("compTypes shipTypes locks remain")
 
     ai = dict_rows(texts["aiPersonalities"])
-    max_training = max(float(row.get("aiTrainingMod") or 0) for row in ai if data_name(row))
-    aim_mods = [row.get("@name") for row in ai if data_name(row) and ("TechMod(aim_control" in (row.get("aiParams") or "") or "TechMod(aim_rangefinder" in (row.get("aiParams") or ""))]
-    if max_training > 0.02 or aim_mods:
-        raise AssertionError({"max_training": max_training, "aim_mods": aim_mods})
+    ai_caps = {
+        "aiTechMod": 0.2,
+        "aiTrainingMod": 0.02,
+        "aiShipyardMod": 0.05,
+        "aiTrMod": 0.05,
+        "aiOffense": 0.5,
+        "aiDefense": 0.6,
+        "seaControlProbability": 0.35,
+        "invadeProbability": 0.1,
+        "protectProbability": 0.35,
+        "aiShipbuilding": 0.25,
+        "aiRefit": 0.2,
+        "aiAction": 0.5,
+        "aiNavalnvasion": 0.1,
+    }
+    ai_failures = {}
+    for col, cap in ai_caps.items():
+        values = [float(row.get(col) or 0) for row in ai if data_name(row)]
+        actual = max(values or [0])
+        if actual > cap:
+            ai_failures[col] = actual
+    tech_mods = [row.get("@name") for row in ai if data_name(row) and "TechMod(" in (row.get("aiParams") or "")]
+    if ai_failures or tech_mods:
+        raise AssertionError({"ai_caps": ai_failures, "tech_mods": tech_mods})
 
     save_status = []
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):
         obj = unpack_save(path)
+        player_rows = [row for row in obj[6] if isinstance(row, list) and len(row) > 52]
+        names = [row[1] for row in player_rows]
+        duplicate_nations = [name for name, count in Counter(names).items() if count > 1]
+        if duplicate_nations:
+            raise AssertionError(f"{path.name}: duplicate player rows: {duplicate_nations}")
         for row in obj[6]:
             if isinstance(row, list) and len(row) > 52 and row[1] in MAJORS and row[2] is True:
                 if float(row[20]) < 15_000_000 or float(row[52]) < 499_990_000_000:
                     raise AssertionError(f"{path.name}: hotfix floor missing: {row[1]} {row[20]} {row[52]}")
                 save_status.append((path.name, row[1], row[20], row[52]))
+            elif isinstance(row, list) and len(row) > 52 and row[2] is not True:
+                if float(row[20]) > 50_000 or float(row[52]) > 5_000_000_000:
+                    raise AssertionError(f"{path.name}: AI cap exceeded: {row[1]} {row[20]} {row[52]}")
     print(json.dumps({"ok": True, "save_status": save_status}, indent=2))
 
 

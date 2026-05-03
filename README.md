@@ -13,9 +13,11 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
-- Player shipyard start set to 15,000,000 tons.
+- Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
-- AI economy/training/aim research nerfed for campaign stability.
+- Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
+- AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
+- AI `TechMod(...)` bonuses removed from personalities.
 - Parts/equipment unlocks: `countries`, `needunlock`, `compTypes.shipTypes` cleared.
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.
