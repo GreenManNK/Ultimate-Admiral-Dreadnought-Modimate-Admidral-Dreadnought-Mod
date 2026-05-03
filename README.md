@@ -18,7 +18,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.
-- Existing saves normalized so player saved ship designs use their previous max-tonnage value plus a 25% margin, instead of stale underweight limits or an excessive 400k value.
+- Existing saves normalized so player saved ship designs use their previous max-tonnage value plus a 35% margin, instead of stale underweight limits or an excessive 400k value.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
 - Construction economy normalized: main build time kept vanilla-safe, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
