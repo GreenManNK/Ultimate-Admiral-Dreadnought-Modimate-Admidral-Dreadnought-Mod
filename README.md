@@ -16,6 +16,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
+- Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
 - Construction economy normalized: main build time kept vanilla-safe, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.

@@ -12,6 +12,12 @@ except Exception as exc:
 GAME_DATA = Path(r"F:\SteamLibrary\steamapps\common\Ultimate Admiral Dreadnoughts\Ultimate Admiral Dreadnoughts_Data")
 SAVE_ROOT = Path.home() / r"AppData/LocalLow/Game Labs/Ultimate Admiral Dreadnoughts"
 MAJORS = {"britain","france","germany","usa","russia","italy","austria","japan","spain","china"}
+PLAYER_ACCURACY_TECH = {
+    "aim_control_end": 14,
+    "aim_rangefinder_end": 13,
+    "tactics_tactics_end": 21,
+    "tactics_comm_end": 24,
+}
 
 
 def get_text(d):
@@ -185,10 +191,23 @@ def main():
             if isinstance(row, list) and len(row) > 52 and row[1] in MAJORS and row[2] is True:
                 if float(row[20]) < 15_000_000 or float(row[52]) < 499_990_000_000:
                     raise AssertionError(f"{path.name}: hotfix floor missing: {row[1]} {row[20]} {row[52]}")
+                tech = row[41] if len(row) > 41 and isinstance(row[41], dict) else {}
+                for key, expected in PLAYER_ACCURACY_TECH.items():
+                    if tech.get(key, -1) < expected:
+                        raise AssertionError(f"{path.name}: player accuracy tech missing: {row[1]} {key}={tech.get(key)}")
                 save_status.append((path.name, row[1], row[20], row[52]))
             elif isinstance(row, list) and len(row) > 52 and row[2] is not True:
                 if float(row[20]) > 50_000 or float(row[52]) > 5_000_000_000:
                     raise AssertionError(f"{path.name}: AI cap exceeded: {row[1]} {row[20]} {row[52]}")
+        player_nations = {row[1] for row in obj[6] if isinstance(row, list) and len(row) > 52 and row[2] is True}
+        for ship_list_index in (13, 14):
+            for ship in obj[ship_list_index]:
+                if not (isinstance(ship, list) and len(ship) > 77 and len(ship) > 62):
+                    continue
+                if ship[62] in player_nations and float(ship[77]) < 100:
+                    raise AssertionError(f"{path.name}: player ship training below 100: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[77]}")
+                if ship_list_index == 13 and ship[62] in player_nations and isinstance(ship[28], int) and ship[28] < 4:
+                    raise AssertionError(f"{path.name}: player surface crew level below 4: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[28]}")
     print(json.dumps({"ok": True, "save_status": save_status}, indent=2))
 
 

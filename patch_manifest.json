@@ -75,6 +75,14 @@
     "ai_shipyard_tons": 50000,
     "ai_funds_usd": 5000000000
   },
+  "save_player_accuracy_hotfix": {
+    "aim_control_end": 14,
+    "aim_rangefinder_end": 13,
+    "tactics_tactics_end": 21,
+    "tactics_comm_end": 24,
+    "ship_training_points": 100,
+    "surface_crew_level": 4
+  },
   "binary_files_not_tracked": [
     "resources.assets",
     "GameAssembly.dll",
