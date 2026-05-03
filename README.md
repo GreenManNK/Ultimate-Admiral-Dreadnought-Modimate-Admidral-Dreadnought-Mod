@@ -1,7 +1,7 @@
 ﻿# Ultimate Admiral Dreadnoughts - Codex Patch Snapshot
 
-This repository is a lightweight patch ledger for the locally modified game install.
-It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campaign save binaries because those files are large/proprietary and unsuitable for normal Git hosting.
+This repository is a lightweight patch ledger and patcher for the locally modified game install.
+It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campaign save binaries because those files are large/proprietary and unsuitable for normal Git hosting. The script in `scripts/apply_codex_patch.py` reapplies the changes to a local game install instead.
 
 ## Current live game targets
 
@@ -25,13 +25,15 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.
 
-## Push note
+## Apply
 
-To push this snapshot, add a remote manually:
+Install dependencies, then run the patcher:
 
 ```powershell
-git remote add origin <repo-url>
-git push -u origin main
+pip install -r requirements.txt
+python .\scripts\apply_codex_patch.py
 ```
 
-Do not add raw game binaries unless using an appropriate private repo and large-file strategy.
+Use `--dry-run` to inspect what it would change. The patcher creates backups under the save folder before writing.
+
+Do not add raw game binaries or campaign saves to this repo.

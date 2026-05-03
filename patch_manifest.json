@@ -102,5 +102,11 @@
     "resources.assets",
     "GameAssembly.dll",
     "save_*.bin"
+  ],
+  "safe_patch_files": [
+    "scripts/apply_codex_patch.py",
+    "scripts/validate_patch.py",
+    "data/hull_tonnage_max_400k.csv",
+    "requirements.txt"
   ]
 }
