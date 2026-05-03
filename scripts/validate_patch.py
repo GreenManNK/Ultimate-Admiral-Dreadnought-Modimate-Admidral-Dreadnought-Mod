@@ -91,6 +91,40 @@ def main():
         if actual != expected:
             raise AssertionError(f"param {key}: expected {expected}, got {actual}")
 
+    economy_required = {
+        "ship_construction_time_modifier": "0.6",
+        "repair_cost_mult": "0.5",
+        "repair_time_mult": "0.45",
+        "refit_time_mult": "0.3",
+        "refit_time_modifier": "0.3",
+        "suspend_cost_multiplier": "0.15",
+        "ship_movement_cost_turn": "0.005",
+        "price_steel": "0.000318",
+        "price_nickel": "0.008406",
+        "price_chrome": "0.00459",
+        "price_molybdenum": "0.0588",
+        "price_copper": "0.003498",
+        "price_hull": "1070.706",
+        "price_surv": "485.22825",
+        "price_armor": "578.29668",
+        "price_turret": "2055.87",
+        "price_barrel": "3768.349005",
+        "price_engine": "197.16",
+        "price_anti_torp": "407.04",
+        "price_fuel": "400",
+        "price_ammo": "1550",
+        "price_torpedoes": "2000",
+        "mines_cost_mod": "8250",
+        "minesweep_cost_mod": "11250",
+        "ammunition_cost_mod": "5",
+        "fuel_cost_mod": "0.04",
+        "action_cooldown_time": "2",
+    }
+    for key, expected in economy_required.items():
+        actual = pd.get(key)
+        if actual != expected:
+            raise AssertionError(f"economy param {key}: expected {expected}, got {actual}")
+
     parts = dict_rows(texts["parts"])
     country_locked = 0
     needunlock = 0

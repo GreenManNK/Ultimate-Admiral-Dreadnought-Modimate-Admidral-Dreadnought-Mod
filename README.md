@@ -18,6 +18,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
+- Construction economy normalized: main build time kept vanilla-safe, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
 - Parts/equipment unlocks: `countries`, `needunlock`, `compTypes.shipTypes` cleared.
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.
