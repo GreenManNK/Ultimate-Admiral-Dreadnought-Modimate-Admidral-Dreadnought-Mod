@@ -1,5 +1,5 @@
 ﻿from pathlib import Path
-from collections import Counter
+from collections import Counter, defaultdict
 import csv, io, re, json
 
 try:
@@ -43,6 +43,15 @@ def unpack_save(path):
     size = int.from_bytes(data[1:5], "big", signed=True)
     dec = lz4.block.decompress(data[5:], uncompressed_size=size)
     return msgpack.unpackb(dec, raw=False, strict_map_key=False)
+
+
+def load_saved_hull_tonnage_targets():
+    path = Path(__file__).resolve().parents[1] / "data" / "hull_tonnage_max_400k.csv"
+    targets = defaultdict(float)
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            targets[row["name"]] = max(targets[row["name"]], float(row["tonnageMax"]))
+    return targets
 
 
 def main():
@@ -209,6 +218,7 @@ def main():
         raise AssertionError({"ai_caps": ai_failures, "tech_mods": tech_mods})
 
     save_status = []
+    saved_hull_targets = load_saved_hull_tonnage_targets()
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):
         obj = unpack_save(path)
         player_rows = [row for row in obj[6] if isinstance(row, list) and len(row) > 52]
@@ -233,6 +243,10 @@ def main():
             for ship in obj[ship_list_index]:
                 if not (isinstance(ship, list) and len(ship) > 77 and len(ship) > 62):
                     continue
+                if ship_list_index == 13 and ship[62] in player_nations and len(ship) > 15:
+                    target = saved_hull_targets.get(ship[10])
+                    if target and float(ship[15]) + 1e-3 < target:
+                        raise AssertionError(f"{path.name}: player saved hull tonnage low: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[10]} {ship[15]} < {target}")
                 if ship[62] in player_nations and float(ship[77]) < 100:
                     raise AssertionError(f"{path.name}: player ship training below 100: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[77]}")
                 if ship_list_index == 13 and ship[62] in player_nations and isinstance(ship[28], int) and ship[28] < 4:

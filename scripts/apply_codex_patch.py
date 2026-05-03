@@ -437,6 +437,9 @@ def patch_save_object(obj) -> int:
     changed = 0
     players = obj[6]
     human_nations = {row[1] for row in players if isinstance(row, list) and len(row) > 52 and row[2] is True}
+    hull_targets = defaultdict(float)
+    for (name, _occurrence), value in load_hull_targets().items():
+        hull_targets[name] = max(hull_targets[name], float(value))
     for row in players:
         if not isinstance(row, list) or len(row) <= 52:
             continue
@@ -468,6 +471,11 @@ def patch_save_object(obj) -> int:
         for ship in obj[ship_list_index]:
             if not (isinstance(ship, list) and len(ship) > 77 and len(ship) > 62 and ship[62] in human_nations):
                 continue
+            if ship_list_index == 13 and len(ship) > 15:
+                target = hull_targets.get(ship[10])
+                if target and isinstance(ship[15], (int, float)) and float(ship[15]) < target:
+                    ship[15] = float(target)
+                    changed += 1
             if float(ship[77]) < PLAYER_SHIP_TRAINING_POINTS:
                 ship[77] = PLAYER_SHIP_TRAINING_POINTS
                 changed += 1

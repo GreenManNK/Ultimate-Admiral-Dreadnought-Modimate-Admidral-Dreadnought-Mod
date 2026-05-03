@@ -81,7 +81,8 @@
     "tactics_tactics_end": 21,
     "tactics_comm_end": 24,
     "ship_training_points": 100,
-    "surface_crew_level": 4
+    "surface_crew_level": 4,
+    "saved_design_tonnage_uses_hull_tonnage_patch": true
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
