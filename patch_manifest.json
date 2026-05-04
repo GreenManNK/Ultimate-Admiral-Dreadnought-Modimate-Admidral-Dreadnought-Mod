@@ -114,7 +114,8 @@
   },
   "stability_patch": {
     "disabled_scandinavia_ship_names": true,
-    "small_hull_generator_weight_relief": true
+    "small_hull_generator_weight_relief": true,
+    "ai_ship_player_port_sanitizer": true
   },
   "custom_ship_names": {
     "marker": "codex_custom_name_pool",

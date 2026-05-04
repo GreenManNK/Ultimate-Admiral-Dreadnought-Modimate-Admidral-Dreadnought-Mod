@@ -19,6 +19,7 @@ PLAYER_ACCURACY_TECH = {
     "tactics_comm_end": 24,
 }
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
+SHIP_PORT_FIELDS = (73, 74, 81)
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
 CUSTOM_NAME_COUNTS = {
@@ -55,6 +56,21 @@ def unpack_save(path):
     size = int.from_bytes(data[1:5], "big", signed=True)
     dec = lz4.block.decompress(data[5:], uncompressed_size=size)
     return msgpack.unpackb(dec, raw=False, strict_map_key=False)
+
+
+def save_port_owner_map(obj):
+    port_owner = {}
+    for province_list_index in (9, 10, 11):
+        if len(obj) <= province_list_index or not isinstance(obj[province_list_index], list):
+            continue
+        for province in obj[province_list_index]:
+            if not (isinstance(province, list) and len(province) > 12 and isinstance(province[12], list)):
+                continue
+            owner = province[4] if len(province) > 4 else None
+            for port in province[12]:
+                if isinstance(port, str) and port:
+                    port_owner[port] = owner
+    return port_owner
 
 
 def main():
@@ -275,9 +291,24 @@ def main():
                 if float(row[20]) > 50_000 or float(row[52]) > 5_000_000_000:
                     raise AssertionError(f"{path.name}: AI cap exceeded: {row[1]} {row[20]} {row[52]}")
         player_nations = {row[1] for row in obj[6] if isinstance(row, list) and len(row) > 52 and row[2] is True}
+        port_owner = save_port_owner_map(obj)
         for ship_list_index in (13, 14):
             for ship in obj[ship_list_index]:
-                if not (isinstance(ship, list) and len(ship) > 77 and len(ship) > 62):
+                if not (isinstance(ship, list) and len(ship) > 62):
+                    continue
+                if ship[62] not in player_nations:
+                    bad_ports = [
+                        ship[field_index]
+                        for field_index in SHIP_PORT_FIELDS
+                        if len(ship) > field_index
+                        and isinstance(ship[field_index], str)
+                        and ship[field_index]
+                        and port_owner.get(ship[field_index]) in player_nations
+                    ]
+                    if bad_ports:
+                        raise AssertionError(f"{path.name}: AI ship references player-owned ports: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {bad_ports}")
+                    continue
+                if not (len(ship) > 77):
                     continue
                 if ship[62] in player_nations and float(ship[77]) < 100:
                     raise AssertionError(f"{path.name}: player ship training below 100: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[77]}")

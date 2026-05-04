@@ -37,6 +37,7 @@ PLAYER_BUILD_STATUS = 2
 PLAYER_BUILD_REMAINING_FACTOR = 0.25
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 PLAYER_BUILD_REMAINING_MIN_MONTHS = 1.0
+SHIP_PORT_FIELDS = (73, 74, 81)
 PLAYER_ACCURACY_TECH = {
     "aim_control_end": 14,
     "aim_rangefinder_end": 13,
@@ -572,12 +573,38 @@ def pack_save(obj) -> bytes:
     return msgpack.packb(msgpack.ExtType(99, payload), use_bin_type=False, strict_types=False, use_single_float=True)
 
 
+def save_port_owner_map(obj) -> dict[str, str]:
+    port_owner = {}
+    for province_list_index in (9, 10, 11):
+        if len(obj) <= province_list_index or not isinstance(obj[province_list_index], list):
+            continue
+        for province in obj[province_list_index]:
+            if not (isinstance(province, list) and len(province) > 12 and isinstance(province[12], list)):
+                continue
+            owner = province[4] if len(province) > 4 else None
+            for port in province[12]:
+                if isinstance(port, str) and port:
+                    port_owner[port] = owner
+    return port_owner
+
+
+def fallback_port_for_nation(nation: str, port_owner: dict[str, str]) -> str:
+    if not nation:
+        return ""
+    for port, owner in port_owner.items():
+        if owner == nation:
+            return port
+    return ""
+
+
 def patch_save_object(obj) -> int:
     if not isinstance(obj, list) or len(obj) <= 14 or not isinstance(obj[6], list):
         return 0
     changed = 0
     players = obj[6]
     human_nations = {row[1] for row in players if isinstance(row, list) and len(row) > 52 and row[2] is True}
+    port_owner = save_port_owner_map(obj)
+    fallback_ports = {}
     for row in players:
         if not isinstance(row, list) or len(row) <= 52:
             continue
@@ -607,7 +634,23 @@ def patch_save_object(obj) -> int:
         if len(obj) <= ship_list_index or not isinstance(obj[ship_list_index], list):
             continue
         for ship in obj[ship_list_index]:
-            if not (isinstance(ship, list) and len(ship) > 77 and len(ship) > 62 and ship[62] in human_nations):
+            if not (isinstance(ship, list) and len(ship) > 62):
+                continue
+            nation = ship[62]
+            if nation not in human_nations:
+                fallback = fallback_ports.get(nation)
+                if fallback is None:
+                    fallback = fallback_port_for_nation(nation, port_owner)
+                    fallback_ports[nation] = fallback
+                for field_index in SHIP_PORT_FIELDS:
+                    if len(ship) <= field_index:
+                        continue
+                    port = ship[field_index]
+                    if isinstance(port, str) and port and port_owner.get(port) in human_nations:
+                        ship[field_index] = fallback
+                        changed += 1
+                continue
+            if not (len(ship) > 77):
                 continue
             if float(ship[77]) < PLAYER_SHIP_TRAINING_POINTS:
                 ship[77] = PLAYER_SHIP_TRAINING_POINTS
