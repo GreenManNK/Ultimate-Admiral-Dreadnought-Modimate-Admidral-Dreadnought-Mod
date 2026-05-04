@@ -18,6 +18,7 @@ PLAYER_ACCURACY_TECH = {
     "tactics_tactics_end": 21,
     "tactics_comm_end": 24,
 }
+PLAYER_BUILD_REMAINING_CAP_MONTHS = 12.0
 
 
 def get_text(d):
@@ -237,6 +238,14 @@ def main():
                     raise AssertionError(f"{path.name}: player ship training below 100: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[77]}")
                 if ship_list_index == 13 and ship[62] in player_nations and isinstance(ship[28], int) and ship[28] < 4:
                     raise AssertionError(f"{path.name}: player surface crew level below 4: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[28]}")
+                if (
+                    ship_list_index == 13
+                    and ship[62] in player_nations
+                    and len(ship) > 67
+                    and ship[66] == 2
+                    and float(ship[67]) > PLAYER_BUILD_REMAINING_CAP_MONTHS + 0.01
+                ):
+                    raise AssertionError(f"{path.name}: player build time above cap: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[67]}")
     print(json.dumps({"ok": True, "save_status": save_status}, indent=2))
 
 

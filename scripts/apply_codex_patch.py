@@ -33,6 +33,10 @@ AI_SHIPYARD_CAP = 50_000.0
 AI_FUNDS_CAP = 5_000_000_000.0
 PLAYER_SURFACE_CREW_LEVEL = 4
 PLAYER_SHIP_TRAINING_POINTS = 100.0
+PLAYER_BUILD_STATUS = 2
+PLAYER_BUILD_REMAINING_FACTOR = 0.25
+PLAYER_BUILD_REMAINING_CAP_MONTHS = 12.0
+PLAYER_BUILD_REMAINING_MIN_MONTHS = 1.0
 PLAYER_ACCURACY_TECH = {
     "aim_control_end": 14,
     "aim_rangefinder_end": 13,
@@ -479,6 +483,21 @@ def patch_save_object(obj) -> int:
             ):
                 ship[28] = PLAYER_SURFACE_CREW_LEVEL
                 changed += 1
+            if (
+                ship_list_index == 13
+                and len(ship) > 67
+                and ship[66] == PLAYER_BUILD_STATUS
+                and isinstance(ship[67], (int, float))
+                and float(ship[67]) > PLAYER_BUILD_REMAINING_CAP_MONTHS
+            ):
+                old_remaining = float(ship[67])
+                new_remaining = max(
+                    PLAYER_BUILD_REMAINING_MIN_MONTHS,
+                    min(old_remaining * PLAYER_BUILD_REMAINING_FACTOR, PLAYER_BUILD_REMAINING_CAP_MONTHS),
+                )
+                if new_remaining < old_remaining:
+                    ship[67] = new_remaining
+                    changed += 1
     names = [row[1] for row in players if isinstance(row, list) and len(row) > 2]
     duplicates = [name for name, count in Counter(names).items() if count > 1]
     if duplicates:
