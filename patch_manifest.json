@@ -120,7 +120,14 @@
   "stability_patch": {
     "disabled_scandinavia_ship_names": true,
     "small_hull_generator_weight_relief": true,
-    "ai_ship_player_port_sanitizer": true
+    "ai_ship_player_port_sanitizer": true,
+    "nar_alpha_reviewed": "2026-05-05",
+    "nar_full_table_replace": false
+  },
+  "cross_nation_models": {
+    "partModels_countries_cleared": true,
+    "partModels_shipTypes_preserved": true,
+    "source_reason": "safe NAR alpha integration idea without replacing latest Steam tables"
   },
   "custom_ship_names": {
     "marker": "codex_custom_name_pool",

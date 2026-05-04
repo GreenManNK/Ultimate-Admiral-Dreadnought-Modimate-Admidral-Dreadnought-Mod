@@ -409,6 +409,19 @@ def patch_comp_types(text: str) -> tuple[str, int]:
     return join_table(prefix, rows, final_newline), changed
 
 
+def patch_part_models(text: str) -> tuple[str, int]:
+    prefix, rows, final_newline = split_table(text)
+    columns = colmap(rows[0])
+    changed = 0
+    if "countries" not in columns:
+        return text, changed
+    for row in rows[1:]:
+        if len(row) > columns["countries"] and row[columns["countries"]].strip():
+            row[columns["countries"]] = ""
+            changed += 1
+    return join_table(prefix, rows, final_newline), changed
+
+
 def patch_technologies(text: str) -> tuple[str, int]:
     prefix, rows, final_newline = split_table(text)
     changed = 0
@@ -506,6 +519,7 @@ def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
         "params": patch_params,
         "players": patch_players,
         "parts": patch_parts,
+        "partModels": patch_part_models,
         "compTypes": patch_comp_types,
         "technologies": patch_technologies,
         "aiPersonalities": patch_ai_personalities,

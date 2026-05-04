@@ -80,7 +80,7 @@ def main():
     for obj in env.objects:
         if obj.type.name == "TextAsset":
             d = obj.read()
-            if d.m_Name in {"params", "parts", "players", "compTypes", "technologies", "aiPersonalities", "shipNames"}:
+            if d.m_Name in {"params", "parts", "partModels", "players", "compTypes", "technologies", "aiPersonalities", "shipNames"}:
                 texts[d.m_Name] = get_text(d)
 
     params = dict_rows(texts["params"])
@@ -220,6 +220,15 @@ def main():
     comp = dict_rows(texts["compTypes"])
     if any(data_name(row) and (row.get("shipTypes") or "").strip() for row in comp):
         raise AssertionError("compTypes shipTypes locks remain")
+
+    part_models = dict_rows(texts["partModels"])
+    part_model_country_locks = [
+        row.get("@name")
+        for row in part_models
+        if data_name(row) and (row.get("countries") or "").strip()
+    ]
+    if part_model_country_locks:
+        raise AssertionError(f"partModels country locks remain: {part_model_country_locks[:10]}")
 
     ai = dict_rows(texts["aiPersonalities"])
     ai_caps = {
