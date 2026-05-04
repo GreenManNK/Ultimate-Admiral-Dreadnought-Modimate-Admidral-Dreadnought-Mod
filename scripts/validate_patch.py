@@ -18,7 +18,7 @@ PLAYER_ACCURACY_TECH = {
     "tactics_tactics_end": 21,
     "tactics_comm_end": 24,
 }
-PLAYER_BUILD_REMAINING_CAP_MONTHS = 12.0
+PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 
 
 def get_text(d):
@@ -52,7 +52,7 @@ def main():
     for obj in env.objects:
         if obj.type.name == "TextAsset":
             d = obj.read()
-            if d.m_Name in {"params", "parts", "players", "compTypes", "technologies", "aiPersonalities"}:
+            if d.m_Name in {"params", "parts", "players", "compTypes", "technologies", "aiPersonalities", "shipNames"}:
                 texts[d.m_Name] = get_text(d)
 
     params = dict_rows(texts["params"])
@@ -91,7 +91,17 @@ def main():
         "ai_ship_gdp_ratio": "500000",
         "override_shipybuilding_limit": "0.2",
         "ai_shipyard_threshold_cost": "0.1",
-        "fleet_generation_chance": "5",
+        "fleet_generation_chance": "0",
+        "fleet_generation_years": "99",
+        "fleet_generation_index_chance": "0",
+        "fleet_generation_money_min": "0",
+        "fleet_generation_money_max": "0",
+        "Max_Battles": "2",
+        "battle_chance": "250",
+        "key_battle_chance": "100",
+        "rebattle_chance": "0",
+        "battle_tonnage_mod": "0.8",
+        "battle_ships_mod": "0.25",
     }
     for key, expected in required.items():
         actual = pd.get(key)
@@ -99,7 +109,7 @@ def main():
             raise AssertionError(f"param {key}: expected {expected}, got {actual}")
 
     economy_required = {
-        "ship_construction_time_modifier": "0.6",
+        "ship_construction_time_modifier": "0.15",
         "repair_cost_mult": "0.5",
         "repair_time_mult": "0.45",
         "refit_time_mult": "0.3",
@@ -170,8 +180,8 @@ def main():
         "bb_6": [400000.0],
         "bb_6_iowa": [392400.0],
         "bb_5": [345600.0],
-        "dd_1": [3960.0],
-        "tb_lowbow": [1800.0],
+        "dd_1": [15000.0],
+        "tb_lowbow": [6000.0],
         "tr": [72000.0],
     }
     for name, expected in representative_hull_values.items():
@@ -208,6 +218,15 @@ def main():
     tech_mods = [row.get("@name") for row in ai if data_name(row) and "TechMod(" in (row.get("aiParams") or "")]
     if ai_failures or tech_mods:
         raise AssertionError({"ai_caps": ai_failures, "tech_mods": tech_mods})
+
+    ship_names = dict_rows(texts["shipNames"])
+    bad_scandinavia = [
+        row.get("@name")
+        for row in ship_names
+        if data_name(row) and (row.get("country") or "").strip() == "scandinavia" and row.get("enabled") != "0"
+    ]
+    if bad_scandinavia:
+        raise AssertionError(f"enabled scandinavia ship names remain: {bad_scandinavia[:10]}")
 
     save_status = []
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):

@@ -13,16 +13,18 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
 - Hull tonnage limits raised safely: all existing hull `tonnageMax` values raised again with a 400,000 ton cap; `tonnageMin` values left unchanged.
+- Small TB/DD hull tonnage limits raised again to reduce random-ship generator weight failures and log spam.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
+- Campaign battle/fleet generation reduced to lower turn-processing load.
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.
-- Existing saves hotfixed so player ships under construction have at most 12 months remaining; AI build queues are not accelerated.
+- Existing saves hotfixed so player ships under construction have at most 6 months remaining; AI build queues are not accelerated.
 - Existing saves normalized so player saved ship designs use their previous max-tonnage value plus a 35% margin, instead of stale underweight limits or an excessive 400k value.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
-- Construction economy normalized: main build time kept vanilla-safe, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
+- Construction economy normalized: new-build time reduced further for visibility, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
 - Parts/equipment unlocks: `countries`, `needunlock`, `compTypes.shipTypes` cleared.
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.

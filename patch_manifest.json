@@ -36,10 +36,20 @@
     "ai_ship_gdp_ratio": "500000",
     "override_shipybuilding_limit": "0.2",
     "ai_shipyard_threshold_cost": "0.1",
-    "fleet_generation_chance": "5"
+    "fleet_generation_chance": "0",
+    "fleet_generation_years": "99",
+    "fleet_generation_index_chance": "0",
+    "fleet_generation_money_min": "0",
+    "fleet_generation_money_max": "0",
+    "Max_Battles": "2",
+    "battle_chance": "250",
+    "key_battle_chance": "100",
+    "rebattle_chance": "0",
+    "battle_tonnage_mod": "0.8",
+    "battle_ships_mod": "0.25"
   },
   "construction_economy_values": {
-    "ship_construction_time_modifier": "0.6",
+    "ship_construction_time_modifier": "0.15",
     "repair_cost_mult": "0.5",
     "repair_time_mult": "0.45",
     "refit_time_mult": "0.3",
@@ -84,7 +94,7 @@
     "surface_crew_level": 4,
     "saved_design_tonnage_margin_from_previous": 1.35,
     "player_build_remaining_factor": 0.25,
-    "player_build_remaining_cap_months": 12,
+    "player_build_remaining_cap_months": 6,
     "player_build_remaining_min_months": 1
   },
   "hull_tonnage_patch": {
@@ -97,10 +107,14 @@
       "bb_6": 400000,
       "bb_6_iowa": 392400,
       "bb_5": 345600,
-      "dd_1": 3960,
-      "tb_lowbow": 1800,
+      "dd_1": 15000,
+      "tb_lowbow": 6000,
       "tr": 72000
     }
+  },
+  "stability_patch": {
+    "disabled_scandinavia_ship_names": true,
+    "small_hull_generator_weight_relief": true
   },
   "binary_files_not_tracked": [
     "resources.assets",

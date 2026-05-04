@@ -35,7 +35,7 @@ PLAYER_SURFACE_CREW_LEVEL = 4
 PLAYER_SHIP_TRAINING_POINTS = 100.0
 PLAYER_BUILD_STATUS = 2
 PLAYER_BUILD_REMAINING_FACTOR = 0.25
-PLAYER_BUILD_REMAINING_CAP_MONTHS = 12.0
+PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 PLAYER_BUILD_REMAINING_MIN_MONTHS = 1.0
 PLAYER_ACCURACY_TECH = {
     "aim_control_end": 14,
@@ -80,12 +80,18 @@ PARAM_VALUES = {
     "ai_shipyard_threshold_cost": "0.1",
     "ai_refit_base": "0.1",
     "ai_refit_simple": "0.12",
-    "fleet_generation_chance": "5",
-    "fleet_generation_years": "1",
-    "fleet_generation_index_chance": "50",
-    "fleet_generation_money_min": "0.5",
-    "fleet_generation_money_max": "0.5",
-    "ship_construction_time_modifier": "0.6",
+    "fleet_generation_chance": "0",
+    "fleet_generation_years": "99",
+    "fleet_generation_index_chance": "0",
+    "fleet_generation_money_min": "0",
+    "fleet_generation_money_max": "0",
+    "ship_construction_time_modifier": "0.15",
+    "Max_Battles": "2",
+    "battle_chance": "250",
+    "key_battle_chance": "100",
+    "rebattle_chance": "0",
+    "battle_tonnage_mod": "0.8",
+    "battle_ships_mod": "0.25",
     "repair_cost_mult": "0.5",
     "repair_time_mult": "0.45",
     "refit_time_mult": "0.3",
@@ -360,6 +366,21 @@ def patch_ai_personalities(text: str) -> tuple[str, int]:
     return join_table(prefix, rows, final_newline), changed
 
 
+def patch_ship_names(text: str) -> tuple[str, int]:
+    prefix, rows, final_newline = split_table(text)
+    columns = colmap(rows[0])
+    changed = 0
+    if "country" not in columns or "enabled" not in columns:
+        return text, changed
+    for row in rows[1:]:
+        if len(row) <= max(columns["country"], columns["enabled"]):
+            continue
+        if row[columns["country"]].strip() == "scandinavia" and row[columns["enabled"]] != "0":
+            row[columns["enabled"]] = "0"
+            changed += 1
+    return join_table(prefix, rows, final_newline), changed
+
+
 def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
     asset = game_data / "resources.assets"
     if not asset.exists():
@@ -372,6 +393,7 @@ def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
         "compTypes": patch_comp_types,
         "technologies": patch_technologies,
         "aiPersonalities": patch_ai_personalities,
+        "shipNames": patch_ship_names,
     }
     report = {}
     for obj in env.objects:
