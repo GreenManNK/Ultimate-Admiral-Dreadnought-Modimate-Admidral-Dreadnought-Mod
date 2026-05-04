@@ -85,6 +85,11 @@
     "ai_shipyard_tons": 50000,
     "ai_funds_usd": 5000000000
   },
+  "save_performance_hotfix": {
+    "remove_ai_ships_under_construction": true,
+    "clean_removed_ship_task_force_refs": true,
+    "player_ships_untouched": true
+  },
   "save_player_accuracy_hotfix": {
     "aim_control_end": 14,
     "aim_rangefinder_end": 13,

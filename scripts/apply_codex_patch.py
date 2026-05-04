@@ -37,6 +37,10 @@ PLAYER_BUILD_STATUS = 2
 PLAYER_BUILD_REMAINING_FACTOR = 0.25
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 PLAYER_BUILD_REMAINING_MIN_MONTHS = 1.0
+AI_BUILD_STATUS = 2
+SAVE_SURFACE_SHIPS_INDEX = 13
+SAVE_SUBMARINES_INDEX = 14
+SAVE_TASK_FORCES_INDEX = 22
 SHIP_PORT_FIELDS = (73, 74, 81)
 PLAYER_ACCURACY_TECH = {
     "aim_control_end": 14,
@@ -597,6 +601,52 @@ def fallback_port_for_nation(nation: str, port_owner: dict[str, str]) -> str:
     return ""
 
 
+def remove_ai_build_queue_ships(obj, human_nations: set[str]) -> tuple[int, set[str]]:
+    if not human_nations:
+        return 0, set()
+    changed = 0
+    removed_ship_ids = set()
+    for ship_list_index in (SAVE_SURFACE_SHIPS_INDEX, SAVE_SUBMARINES_INDEX):
+        if len(obj) <= ship_list_index or not isinstance(obj[ship_list_index], list):
+            continue
+        kept_ships = []
+        for ship in obj[ship_list_index]:
+            remove_ship = (
+                isinstance(ship, list)
+                and len(ship) > 66
+                and isinstance(ship[1], str)
+                and ship[62] not in human_nations
+                and ship[66] == AI_BUILD_STATUS
+            )
+            if remove_ship:
+                removed_ship_ids.add(ship[1])
+                changed += 1
+            else:
+                kept_ships.append(ship)
+        obj[ship_list_index] = kept_ships
+    return changed, removed_ship_ids
+
+
+def clean_task_force_ship_refs(obj, removed_ship_ids: set[str]) -> int:
+    if not removed_ship_ids or len(obj) <= SAVE_TASK_FORCES_INDEX or not isinstance(obj[SAVE_TASK_FORCES_INDEX], list):
+        return 0
+    changed = 0
+    kept_routes = []
+    for route in obj[SAVE_TASK_FORCES_INDEX]:
+        if not (isinstance(route, list) and len(route) > 1 and isinstance(route[1], list)):
+            kept_routes.append(route)
+            continue
+        original_count = len(route[1])
+        route[1] = [ship_id for ship_id in route[1] if ship_id not in removed_ship_ids]
+        changed += original_count - len(route[1])
+        if route[1]:
+            kept_routes.append(route)
+        else:
+            changed += 1
+    obj[SAVE_TASK_FORCES_INDEX] = kept_routes
+    return changed
+
+
 def patch_save_object(obj) -> int:
     if not isinstance(obj, list) or len(obj) <= 14 or not isinstance(obj[6], list):
         return 0
@@ -630,7 +680,10 @@ def patch_save_object(obj) -> int:
             if float(row[52]) > AI_FUNDS_CAP:
                 row[52] = AI_FUNDS_CAP
                 changed += 1
-    for ship_list_index in (13, 14):
+    queue_changes, removed_ship_ids = remove_ai_build_queue_ships(obj, human_nations)
+    changed += queue_changes
+    changed += clean_task_force_ship_refs(obj, removed_ship_ids)
+    for ship_list_index in (SAVE_SURFACE_SHIPS_INDEX, SAVE_SUBMARINES_INDEX):
         if len(obj) <= ship_list_index or not isinstance(obj[ship_list_index], list):
             continue
         for ship in obj[ship_list_index]:

@@ -19,6 +19,7 @@ PLAYER_ACCURACY_TECH = {
     "tactics_comm_end": 24,
 }
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
+AI_BUILD_STATUS = 2
 SHIP_PORT_FIELDS = (73, 74, 81)
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
@@ -297,6 +298,8 @@ def main():
                 if not (isinstance(ship, list) and len(ship) > 62):
                     continue
                 if ship[62] not in player_nations:
+                    if len(ship) > 66 and ship[66] == AI_BUILD_STATUS:
+                        raise AssertionError(f"{path.name}: AI build queue ship remains: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]}")
                     bad_ports = [
                         ship[field_index]
                         for field_index in SHIP_PORT_FIELDS
@@ -322,6 +325,14 @@ def main():
                     and float(ship[67]) > PLAYER_BUILD_REMAINING_CAP_MONTHS + 0.01
                 ):
                     raise AssertionError(f"{path.name}: player build time above cap: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[67]}")
+        if len(obj) > 22 and isinstance(obj[22], list):
+            empty_routes = [
+                route[0] if isinstance(route, list) and route else ""
+                for route in obj[22]
+                if isinstance(route, list) and len(route) > 1 and isinstance(route[1], list) and not route[1]
+            ]
+            if empty_routes:
+                raise AssertionError(f"{path.name}: empty task-force routes remain: {empty_routes[:10]}")
     print(json.dumps({"ok": True, "save_status": save_status}, indent=2))
 
 
