@@ -17,6 +17,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
 - Campaign battle/fleet generation reduced to lower turn-processing load.
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
+- Custom reserve ship-name pools added for USA and Japan so mass-built player fleets get names instead of falling back to numeric hull labels.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.

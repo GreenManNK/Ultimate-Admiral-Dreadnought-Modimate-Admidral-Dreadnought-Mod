@@ -19,6 +19,17 @@ PLAYER_ACCURACY_TECH = {
     "tactics_comm_end": 24,
 }
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
+CUSTOM_NAME_MARKER = "codex_custom_name_pool"
+CUSTOM_NAME_COUNTRIES = ("usa", "japan")
+CUSTOM_NAME_COUNTS = {
+    "bb": 240,
+    "bc": 160,
+    "ca": 360,
+    "cl": 280,
+    "dd": 500,
+    "tb": 250,
+    "ss": 160,
+}
 
 
 def get_text(d):
@@ -227,6 +238,21 @@ def main():
     ]
     if bad_scandinavia:
         raise AssertionError(f"enabled scandinavia ship names remain: {bad_scandinavia[:10]}")
+    expected_custom_count = len(CUSTOM_NAME_COUNTRIES) * sum(CUSTOM_NAME_COUNTS.values())
+    custom_rows = [
+        row
+        for row in ship_names
+        if data_name(row)
+        and row.get("#infoLink") == CUSTOM_NAME_MARKER
+        and row.get("country") in CUSTOM_NAME_COUNTRIES
+    ]
+    if len(custom_rows) < expected_custom_count:
+        raise AssertionError(f"custom ship names missing: expected {expected_custom_count}, got {len(custom_rows)}")
+    for country in CUSTOM_NAME_COUNTRIES:
+        for ship_type, expected in CUSTOM_NAME_COUNTS.items():
+            actual = sum(1 for row in custom_rows if row.get("country") == country and row.get("shipType") == ship_type)
+            if actual < expected:
+                raise AssertionError(f"custom ship names missing for {country}/{ship_type}: expected {expected}, got {actual}")
 
     save_status = []
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):

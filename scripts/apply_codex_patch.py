@@ -43,6 +43,81 @@ PLAYER_ACCURACY_TECH = {
     "tactics_tactics_end": 21,
     "tactics_comm_end": 24,
 }
+CUSTOM_NAME_MARKER = "codex_custom_name_pool"
+CUSTOM_NAME_COUNTRIES = ("usa", "japan")
+CUSTOM_NAME_COUNTS = {
+    "bb": 240,
+    "bc": 160,
+    "ca": 360,
+    "cl": 280,
+    "dd": 500,
+    "tb": 250,
+    "ss": 160,
+}
+CUSTOM_NAME_PREFIXES = (
+    "Aegis",
+    "Anvil",
+    "Arc",
+    "Argent",
+    "Ash",
+    "Atlas",
+    "Beacon",
+    "Boreal",
+    "Cinder",
+    "Citadel",
+    "Comet",
+    "Crown",
+    "Dawn",
+    "Eclipse",
+    "Ember",
+    "Falcon",
+    "Frontier",
+    "Granite",
+    "Harbor",
+    "Horizon",
+    "Iron",
+    "Keystone",
+    "Liberty",
+    "Meridian",
+    "Nova",
+    "Onyx",
+    "Orion",
+    "Pioneer",
+    "Prairie",
+    "Radiant",
+    "Ranger",
+    "Resolute",
+    "Sable",
+    "Sentinel",
+    "Sierra",
+    "Sovereign",
+    "Summit",
+    "Tempest",
+    "Titan",
+    "Valor",
+)
+CUSTOM_NAME_SUFFIXES = (
+    "Vanguard",
+    "Sentinel",
+    "Defiance",
+    "Endeavor",
+    "Guardian",
+    "Ranger",
+    "Reliance",
+    "Victory",
+    "Protector",
+    "Challenger",
+    "Pathfinder",
+    "Watchman",
+    "Bulwark",
+    "Mariner",
+    "Voyager",
+    "Executor",
+    "Thunder",
+    "Arrow",
+    "Falchion",
+    "Haven",
+)
 
 PARAM_VALUES = {
     "shipyard_start": "12500",
@@ -372,13 +447,49 @@ def patch_ship_names(text: str) -> tuple[str, int]:
     changed = 0
     if "country" not in columns or "enabled" not in columns:
         return text, changed
+    max_id = max((int(row[0]) for row in rows[1:] if row and row[0].isdigit()), default=7000)
+    existing = set()
     for row in rows[1:]:
         if len(row) <= max(columns["country"], columns["enabled"]):
             continue
         if row[columns["country"]].strip() == "scandinavia" and row[columns["enabled"]] != "0":
             row[columns["enabled"]] = "0"
             changed += 1
+        if len(row) > max(columns["country"], columns["shipType"], columns["nameUi"]):
+            existing.add(
+                (
+                    row[columns["country"]].strip(),
+                    row[columns["shipType"]].strip(),
+                    row[columns["nameUi"]].strip(),
+                )
+            )
+    header_len = len(rows[0])
+    marker_index = columns.get("#infoLink")
+    for country in CUSTOM_NAME_COUNTRIES:
+        for ship_type, count in CUSTOM_NAME_COUNTS.items():
+            for index in range(1, count + 1):
+                name = custom_ship_name(ship_type, index)
+                key = (country, ship_type, name)
+                if key in existing:
+                    continue
+                max_id += 1
+                row = [""] * header_len
+                row[columns["@name"]] = str(max_id)
+                row[columns["nameUi"]] = name
+                row[columns["country"]] = country
+                row[columns["shipType"]] = ship_type
+                if marker_index is not None:
+                    row[marker_index] = CUSTOM_NAME_MARKER
+                rows.append(row)
+                existing.add(key)
+                changed += 1
     return join_table(prefix, rows, final_newline), changed
+
+
+def custom_ship_name(ship_type: str, index: int) -> str:
+    prefix = CUSTOM_NAME_PREFIXES[(index - 1) % len(CUSTOM_NAME_PREFIXES)]
+    suffix = CUSTOM_NAME_SUFFIXES[((index - 1) // len(CUSTOM_NAME_PREFIXES)) % len(CUSTOM_NAME_SUFFIXES)]
+    return f"{prefix} {suffix} {ship_type.upper()}{index:03d}"
 
 
 def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
@@ -412,7 +523,11 @@ def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
     if not dry_run:
         tmp = asset.with_suffix(".assets.codex.tmp")
         tmp.write_bytes(env.file.save())
-        os.replace(tmp, asset)
+        try:
+            os.replace(tmp, asset)
+        except PermissionError:
+            shutil.copy2(tmp, asset)
+            tmp.unlink()
     return report
 
 

@@ -116,6 +116,22 @@
     "disabled_scandinavia_ship_names": true,
     "small_hull_generator_weight_relief": true
   },
+  "custom_ship_names": {
+    "marker": "codex_custom_name_pool",
+    "countries": [
+      "usa",
+      "japan"
+    ],
+    "per_country_counts": {
+      "bb": 240,
+      "bc": 160,
+      "ca": 360,
+      "cl": 280,
+      "dd": 500,
+      "tb": 250,
+      "ss": 160
+    }
+  },
   "binary_files_not_tracked": [
     "resources.assets",
     "GameAssembly.dll",
