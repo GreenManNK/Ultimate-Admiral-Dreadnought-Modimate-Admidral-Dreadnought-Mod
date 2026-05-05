@@ -725,6 +725,40 @@ def clean_task_force_ship_refs(obj, removed_ship_ids: set[str]) -> int:
     return changed
 
 
+def sanitize_task_force_routes(obj) -> int:
+    if len(obj) <= SAVE_TASK_FORCES_INDEX or not isinstance(obj[SAVE_TASK_FORCES_INDEX], list):
+        return 0
+    known_ship_ids = set()
+    for ship_list_index in (SAVE_SURFACE_SHIPS_INDEX, SAVE_SUBMARINES_INDEX):
+        if len(obj) <= ship_list_index or not isinstance(obj[ship_list_index], list):
+            continue
+        for ship in obj[ship_list_index]:
+            if isinstance(ship, list) and len(ship) > 1 and isinstance(ship[1], str):
+                known_ship_ids.add(ship[1])
+    changed = 0
+    kept_routes = []
+    for route in obj[SAVE_TASK_FORCES_INDEX]:
+        if not (isinstance(route, list) and len(route) > 1 and isinstance(route[1], list)):
+            kept_routes.append(route)
+            continue
+        original_count = len(route[1])
+        seen = set()
+        cleaned_ship_ids = []
+        for ship_id in route[1]:
+            if ship_id not in known_ship_ids or ship_id in seen:
+                continue
+            seen.add(ship_id)
+            cleaned_ship_ids.append(ship_id)
+        route[1] = cleaned_ship_ids
+        changed += original_count - len(route[1])
+        if route[1]:
+            kept_routes.append(route)
+        else:
+            changed += 1
+    obj[SAVE_TASK_FORCES_INDEX] = kept_routes
+    return changed
+
+
 def patch_save_object(obj) -> int:
     if not isinstance(obj, list) or len(obj) <= 14 or not isinstance(obj[6], list):
         return 0
@@ -761,6 +795,7 @@ def patch_save_object(obj) -> int:
     queue_changes, removed_ship_ids = remove_ai_build_queue_ships(obj, human_nations)
     changed += queue_changes
     changed += clean_task_force_ship_refs(obj, removed_ship_ids)
+    changed += sanitize_task_force_routes(obj)
     for ship_list_index in (SAVE_SURFACE_SHIPS_INDEX, SAVE_SUBMARINES_INDEX):
         if len(obj) <= ship_list_index or not isinstance(obj[ship_list_index], list):
             continue

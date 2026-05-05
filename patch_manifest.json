@@ -88,7 +88,23 @@
   "save_performance_hotfix": {
     "remove_ai_ships_under_construction": true,
     "clean_removed_ship_task_force_refs": true,
+    "sanitize_task_force_stale_refs": true,
+    "sanitize_task_force_duplicate_refs": true,
     "player_ships_untouched": true
+  },
+  "diagnostics": {
+    "log_scanner": "scripts/scan_uad_logs.py",
+    "patterns": [
+      "duplicate_playerdata",
+      "il2cpp_exception",
+      "null_reference",
+      "ship_generation_fail",
+      "critical_move_port",
+      "boxcollider_warning",
+      "task_escape",
+      "route_spike",
+      "asset_unload_spike"
+    ]
   },
   "save_player_accuracy_hotfix": {
     "aim_control_end": 14,

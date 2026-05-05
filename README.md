@@ -26,6 +26,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.
 - Existing saves hotfixed so player ships under construction have at most 6 months remaining; AI build queues are not accelerated.
 - Existing saves hotfixed to remove AI ships still under construction and clean their task-force route references, reducing turn-processing load without touching player ships.
+- Existing saves hotfixed to sanitize task-force routes by removing stale or duplicate ship references without deleting valid ships.
 - Existing saves normalized so player saved ship designs use their previous max-tonnage value plus a 35% margin, instead of stale underweight limits or an excessive 400k value.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
@@ -48,3 +49,11 @@ python .\scripts\apply_codex_patch.py
 Use `--dry-run` to inspect what it would change. The patcher creates backups under the save folder before writing.
 
 Do not add raw game binaries or campaign saves to this repo.
+
+## Diagnostics
+
+Scan recent game logs for known campaign/performance errors:
+
+```powershell
+python .\scripts\scan_uad_logs.py
+```

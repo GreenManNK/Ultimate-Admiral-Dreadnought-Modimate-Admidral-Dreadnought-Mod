@@ -390,6 +390,12 @@ def main():
                 ):
                     raise AssertionError(f"{path.name}: player build time above cap: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[67]}")
         if len(obj) > 22 and isinstance(obj[22], list):
+            known_ship_ids = {
+                ship[1]
+                for ship_list_index in (13, 14)
+                for ship in obj[ship_list_index]
+                if isinstance(ship, list) and len(ship) > 1 and isinstance(ship[1], str)
+            }
             empty_routes = [
                 route[0] if isinstance(route, list) and route else ""
                 for route in obj[22]
@@ -397,6 +403,19 @@ def main():
             ]
             if empty_routes:
                 raise AssertionError(f"{path.name}: empty task-force routes remain: {empty_routes[:10]}")
+            bad_route_refs = []
+            duplicate_route_refs = []
+            for route in obj[22]:
+                if not (isinstance(route, list) and len(route) > 1 and isinstance(route[1], list)):
+                    continue
+                unknown = [ship_id for ship_id in route[1] if ship_id not in known_ship_ids]
+                duplicates = [ship_id for ship_id, count in Counter(route[1]).items() if count > 1]
+                if unknown:
+                    bad_route_refs.append((route[0] if route else "", unknown[:5]))
+                if duplicates:
+                    duplicate_route_refs.append((route[0] if route else "", duplicates[:5]))
+            if bad_route_refs or duplicate_route_refs:
+                raise AssertionError({"bad_route_refs": bad_route_refs[:5], "duplicate_route_refs": duplicate_route_refs[:5]})
     print(json.dumps({"ok": True, "save_status": save_status}, indent=2))
 
 
