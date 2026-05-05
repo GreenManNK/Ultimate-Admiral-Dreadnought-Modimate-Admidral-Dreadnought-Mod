@@ -33,10 +33,10 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - AI `TechMod(...)` bonuses removed from personalities.
 - Construction economy normalized: new-build time reduced further for visibility, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
 - Parts/equipment unlocks: `countries`, `needunlock`, `compTypes.shipTypes` cleared.
-- Cross-nation gun/model availability: `partModels.countries` cleared while `shipTypes` and model references are preserved.
+- Cross-nation model rows are preserved: `partModels.countries` is intentionally not cleared because Steam 1.7.0 asserts during `GameData.PostProcessAll` when model country locks are blanket-removed.
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.
-- NAR alpha review: full table replacement is intentionally avoided because several campaign/world tables are older or schema-incompatible; safe ship-name rows and the cross-nation model-unlock idea are folded into the local patcher.
+- NAR alpha review: full table replacement is intentionally avoided because several campaign/world tables are older or schema-incompatible; safe ship-name rows are folded into the local patcher while unsafe model-lock removal is blocked.
 
 ## Apply
 

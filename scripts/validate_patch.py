@@ -276,8 +276,8 @@ def main():
         for row in part_models
         if data_name(row) and (row.get("countries") or "").strip()
     ]
-    if part_model_country_locks:
-        raise AssertionError(f"partModels country locks remain: {part_model_country_locks[:10]}")
+    if not part_model_country_locks:
+        raise AssertionError("partModels country locks were unexpectedly cleared; Steam 1.7.0 asserts during GameData load")
 
     ai = dict_rows(texts["aiPersonalities"])
     ai_caps = {

@@ -171,9 +171,9 @@
     "nar_full_table_replace": false
   },
   "cross_nation_models": {
-    "partModels_countries_cleared": true,
+    "partModels_countries_cleared": false,
     "partModels_shipTypes_preserved": true,
-    "source_reason": "safe NAR alpha integration idea without replacing latest Steam tables"
+    "source_reason": "blanket-clearing partModels.countries crashes Steam 1.7.0 during GameData.PostProcessAll; unlocks are limited to safer parts and compTypes tables"
   },
   "nar_safe_ship_names": {
     "marker": "codex_nar_safe_ship_name_pool",

@@ -459,16 +459,10 @@ def patch_comp_types(text: str) -> tuple[str, int]:
 
 
 def patch_part_models(text: str) -> tuple[str, int]:
-    prefix, rows, final_newline = split_table(text)
-    columns = colmap(rows[0])
-    changed = 0
-    if "countries" not in columns:
-        return text, changed
-    for row in rows[1:]:
-        if len(row) > columns["countries"] and row[columns["countries"]].strip():
-            row[columns["countries"]] = ""
-            changed += 1
-    return join_table(prefix, rows, final_newline), changed
+    # Steam 1.7.0 asserts in GameData.PostProcessAll if partModels country
+    # restrictions are blanket-cleared. Keep model rows intact and unlock via
+    # the safer parts/compTypes tables instead.
+    return text, 0
 
 
 def patch_technologies(text: str) -> tuple[str, int]:
