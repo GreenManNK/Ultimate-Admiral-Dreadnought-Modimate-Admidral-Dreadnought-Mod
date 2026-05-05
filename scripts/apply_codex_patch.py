@@ -206,20 +206,20 @@ PARAM_VALUES = {
     "armor_limit_multiplier_big_guns": "5",
     "citadel_offset_modifier": "7700",
     "conning_tower_armor_percent": "0.064",
-    "w_armor_belt": "0.01100",
-    "w_armor_belt_extended": "0.01000",
-    "w_armor_deck": "0.01900",
-    "w_armor_deck_extended": "0.01250",
-    "w_conning_tower": "0.03",
+    "w_armor_belt": "0.00880",
+    "w_armor_belt_extended": "0.00800",
+    "w_armor_deck": "0.01520",
+    "w_armor_deck_extended": "0.01000",
+    "w_conning_tower": "0.024",
     "w_conning_tower_threshold": "0.8",
-    "w_superstructure": "0.11",
-    "w_antitorpedo": "0.10000",
-    "w_1st_belt": "0.00468164794",
-    "w_1st_deck": "0.006578947368",
-    "w_2nd_belt": "0.003745318352",
-    "w_2nd_deck": "0.005263157895",
-    "w_3rd_belt": "0.002808988764",
-    "w_3rd_deck": "0.003947368421",
+    "w_superstructure": "0.095",
+    "w_antitorpedo": "0.08500",
+    "w_1st_belt": "0.003745318352",
+    "w_1st_deck": "0.005263157895",
+    "w_2nd_belt": "0.002996254682",
+    "w_2nd_deck": "0.004210526316",
+    "w_3rd_belt": "0.002247191011",
+    "w_3rd_deck": "0.003157894737",
 }
 
 PLAYER_BASELINES = {
@@ -335,7 +335,7 @@ def remove_tech_tokens_by_type(value: str, invalid_types: set[str]) -> str:
 
 
 def load_hull_targets() -> dict[tuple[str, int], str]:
-    path = get_script_root() / "data" / "hull_tonnage_balanced.csv"
+    path = get_script_root() / "data" / "hull_tonnage_max_400k.csv"
     if not path.exists():
         raise FileNotFoundError(path)
     targets = {}

@@ -77,6 +77,23 @@
     "fuel_cost_mod": "0.04",
     "action_cooldown_time": "2"
   },
+  "material_weight_values": {
+    "w_armor_belt": "0.00880",
+    "w_armor_belt_extended": "0.00800",
+    "w_armor_deck": "0.01520",
+    "w_armor_deck_extended": "0.01000",
+    "w_conning_tower": "0.024",
+    "w_conning_tower_threshold": "0.8",
+    "w_superstructure": "0.095",
+    "w_antitorpedo": "0.08500",
+    "w_1st_belt": "0.003745318352",
+    "w_1st_deck": "0.005263157895",
+    "w_2nd_belt": "0.002996254682",
+    "w_2nd_deck": "0.004210526316",
+    "w_3rd_belt": "0.002247191011",
+    "w_3rd_deck": "0.003157894737",
+    "prices_unchanged_by_this_balance": true
+  },
   "save_hotfix_floor": {
     "player_shipyard_tons": 15000000,
     "player_funds_usd": 500000000000
@@ -132,32 +149,15 @@
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
-    "source_file": "data/hull_tonnage_balanced.csv",
-    "tonnageMax_multiplier": null,
-    "tonnageMax_cap": {
-      "bb": 180000,
-      "bc": 140000,
-      "ca": 70000,
-      "cl": 45000,
-      "dd": 18000,
-      "tb": 6000,
-      "tr": 72000
-    },
-    "tonnageMax_floor": {
-      "cl": 30000,
-      "dd": 15000,
-      "tb": 6000,
-      "tr": 72000
-    },
+    "source_file": "data/hull_tonnage_max_400k.csv",
+    "tonnageMax_multiplier": 2.4,
+    "tonnageMax_cap": 400000,
     "tonnageMin_unchanged": true,
     "representative_values": {
-      "bb_7_bismarck": 180000,
-      "bb_6": 180000,
-      "bb_6_iowa": 180000,
-      "bb_5": 180000,
-      "bc_5_assault_russia": 140000,
-      "ca_5_russia_heavy": 70000,
-      "cl_6_cleveland": 45000,
+      "bb_7_bismarck": 400000,
+      "bb_6": 400000,
+      "bb_6_iowa": 392400,
+      "bb_5": 345600,
       "dd_1": 15000,
       "tb_lowbow": 6000,
       "tr": 72000
@@ -247,7 +247,7 @@
   "safe_patch_files": [
     "scripts/apply_codex_patch.py",
     "scripts/validate_patch.py",
-    "data/hull_tonnage_balanced.csv",
+    "data/hull_tonnage_max_400k.csv",
     "requirements.txt"
   ]
 }
