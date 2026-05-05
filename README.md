@@ -18,6 +18,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Campaign battle/fleet generation reduced to lower turn-processing load.
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Custom reserve ship-name pools added for USA and Japan so mass-built player fleets get names instead of falling back to numeric hull labels.
+- Safe NAR ship-name rows added for Brazil, Argentina, and Chile; placeholder names are skipped and rows are marker-tagged to avoid duplicate additions.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to move AI ships away from player-owned ports, preventing repeated `CRITICAL ERROR Move ... to port ...` log spam.
@@ -32,7 +33,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Cross-nation gun/model availability: `partModels.countries` cleared while `shipTypes` and model references are preserved.
 - Cross-hull towers/funnels: `need(...)` removed from `tower_main`, `tower_sec`, and `funnel`; mount points preserved.
 - DIP-safe import: selected data tables and selected params merged while preserving local campaign/AI/player patches.
-- NAR alpha review: full table replacement is intentionally avoided because several campaign/world tables are older or schema-incompatible; only the safe cross-nation model-unlock idea is folded into the local patcher.
+- NAR alpha review: full table replacement is intentionally avoided because several campaign/world tables are older or schema-incompatible; safe ship-name rows and the cross-nation model-unlock idea are folded into the local patcher.
 
 ## Apply
 

@@ -22,6 +22,7 @@ PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 AI_BUILD_STATUS = 2
 SHIP_PORT_FIELDS = (73, 74, 81)
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
+NAR_SAFE_NAME_MARKER = "codex_nar_safe_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
@@ -57,6 +58,20 @@ def unpack_save(path):
     size = int.from_bytes(data[1:5], "big", signed=True)
     dec = lz4.block.decompress(data[5:], uncompressed_size=size)
     return msgpack.unpackb(dec, raw=False, strict_map_key=False)
+
+
+def load_nar_safe_ship_names():
+    path = Path(__file__).resolve().parents[1] / "data" / "nar_safe_ship_names.csv"
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return [
+            (
+                row["country"].strip(),
+                row["shipType"].strip(),
+                row["nameUi"].strip(),
+            )
+            for row in csv.DictReader(handle)
+            if row.get("country") and row.get("shipType") and row.get("nameUi")
+        ]
 
 
 def save_port_owner_map(obj):
@@ -279,6 +294,21 @@ def main():
             actual = sum(1 for row in custom_rows if row.get("country") == country and row.get("shipType") == ship_type)
             if actual < expected:
                 raise AssertionError(f"custom ship names missing for {country}/{ship_type}: expected {expected}, got {actual}")
+    ship_name_keys = {
+        (
+            (row.get("country") or "").strip(),
+            (row.get("shipType") or "").strip(),
+            (row.get("nameUi") or "").strip(),
+        )
+        for row in ship_names
+        if data_name(row)
+    }
+    missing_nar_names = [key for key in load_nar_safe_ship_names() if key not in ship_name_keys]
+    nar_marker_count = sum(1 for row in ship_names if data_name(row) and row.get("#infoLink") == NAR_SAFE_NAME_MARKER)
+    if missing_nar_names:
+        raise AssertionError(f"NAR safe ship names missing: {missing_nar_names[:10]}")
+    if nar_marker_count < len(load_nar_safe_ship_names()):
+        raise AssertionError(f"NAR safe ship name marker count too low: expected {len(load_nar_safe_ship_names())}, got {nar_marker_count}")
 
     save_status = []
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):

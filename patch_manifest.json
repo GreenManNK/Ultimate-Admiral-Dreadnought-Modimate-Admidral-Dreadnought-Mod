@@ -129,6 +129,24 @@
     "partModels_shipTypes_preserved": true,
     "source_reason": "safe NAR alpha integration idea without replacing latest Steam tables"
   },
+  "nar_safe_ship_names": {
+    "marker": "codex_nar_safe_ship_name_pool",
+    "source_file": "data/nar_safe_ship_names.csv",
+    "rows": 352,
+    "countries": {
+      "brazil": 178,
+      "argentina": 124,
+      "chile": 50
+    },
+    "ship_types": {
+      "bb": 73,
+      "bc": 73,
+      "ca": 110,
+      "cl": 96
+    },
+    "placeholder_rows_skipped": true,
+    "duplicate_name_keys_skipped": true
+  },
   "custom_ship_names": {
     "marker": "codex_custom_name_pool",
     "countries": [

@@ -1,0 +1,353 @@
+country,shipType,nameUi
+brazil,bb,São Paulo
+brazil,bb,Minas Gerais
+brazil,bb,Rio de Janeiro
+brazil,bb,Pernambuco
+brazil,bb,Santa Catarina
+brazil,bb,Rio Grande do Sul
+brazil,bb,Paraná
+brazil,bb,Mato Grosso
+brazil,bb,Mato Grosso do sul
+brazil,bb,Goiás
+brazil,bb,Acre
+brazil,bb,Rondonia
+brazil,bb,Pará
+brazil,bb,Amazona
+brazil,bb,Roraima
+brazil,bb,Amapá
+brazil,bb,Maranhão
+brazil,bb,Ceará
+brazil,bb,Piaui
+brazil,bb,Bahia
+brazil,bb,Paraiba
+brazil,bb,Alagoas
+brazil,bb,Rio Grande do Norte
+brazil,bb,Sergipe
+brazil,bb,Espirito Santo
+brazil,bb,Tocantins
+brazil,bc,São Paulo
+brazil,bc,Minas Gerais
+brazil,bc,Rio de Janeiro
+brazil,bc,Pernambuco
+brazil,bc,Santa Catarina
+brazil,bc,Rio Grande do Sul
+brazil,bc,Paraná
+brazil,bc,Mato Grosso
+brazil,bc,Mato Grosso do sul
+brazil,bc,Goiás
+brazil,bc,Acre
+brazil,bc,Rondonia
+brazil,bc,Pará
+brazil,bc,Amazona
+brazil,bc,Roraima
+brazil,bc,Amapá
+brazil,bc,Maranhão
+brazil,bc,Ceará
+brazil,bc,Piaui
+brazil,bc,Bahia
+brazil,bc,Paraiba
+brazil,bc,Alagoas
+brazil,bc,Rio Grande do Norte
+brazil,bc,Sergipe
+brazil,bc,Espirito Santo
+brazil,bc,Tocatins
+brazil,ca,Atlantico
+brazil,ca,Tamandaré
+brazil,ca,Defensora
+brazil,ca,Constituição
+brazil,ca,Liberal
+brazil,ca,Independência
+brazil,ca,União
+brazil,ca,Julio de Noronha
+brazil,ca,Barroso
+brazil,ca,Tupi
+brazil,ca,Tikuna
+brazil,ca,Riachuelo
+brazil,ca,Humaitá
+brazil,ca,Marambaia
+brazil,ca,Piratini
+brazil,ca,Pirajá
+brazil,ca,Pampeiro
+brazil,ca,Penedo
+brazil,ca,Poti
+brazil,ca,Pedro Teixeira
+brazil,ca,Raposo Tavares
+brazil,ca,Grajaú
+brazil,ca,Guaíba
+brazil,ca,Graúna
+brazil,ca,Guajará
+brazil,ca,Guaporé
+brazil,ca,Gurupá
+brazil,ca,Gurupi
+brazil,ca,Guanabara
+brazil,ca,Guarujá
+brazil,ca,Guaratuba
+brazil,ca,Gravatai
+brazil,ca,Bracuí
+brazil,ca,Benevente
+brazil,ca,Bocaina
+brazil,ca,Babitonga
+brazil,ca,Macaé
+brazil,ca,Maracanã
+brazil,ca,Mangaratiba
+brazil,ca,Araguari
+brazil,ca,Marlim
+brazil,ca,Barracuda
+brazil,ca,Dourado
+brazil,ca,Albacora
+brazil,ca,Anequim
+brazil,ca,Mearim
+brazil,ca,Iguatemi
+brazil,ca,Aratu
+brazil,ca,Atalaia
+brazil,ca,Araçatuba
+brazil,ca,Albardão
+brazil,ca,Tritão
+brazil,ca,Triunfo
+brazil,ca,Caboclo
+brazil,ca,Paraguassú
+brazil,ca,Rio Tocantins
+brazil,ca,Rio Xingu
+brazil,ca,Rio Solimões
+brazil,ca,Rio Negro
+brazil,ca,Mangangá
+brazil,ca,Poraquê
+brazil,ca,Cruzeiro do Sul
+brazil,ca,Bauru
+brazil,cl,Atlantico
+brazil,cl,Tamandaré
+brazil,cl,Defensora
+brazil,cl,Constituição
+brazil,cl,Liberal
+brazil,cl,Independência
+brazil,cl,União
+brazil,cl,Julio de Noronha
+brazil,cl,Barroso
+brazil,cl,Tupi
+brazil,cl,Tikuna
+brazil,cl,Riachuelo
+brazil,cl,Humaitá
+brazil,cl,Marambaia
+brazil,cl,Piratini
+brazil,cl,Pirajá
+brazil,cl,Pampeiro
+brazil,cl,Penedo
+brazil,cl,Poti
+brazil,cl,Pedro Teixeira
+brazil,cl,Raposo Tavares
+brazil,cl,Grajaú
+brazil,cl,Guaíba
+brazil,cl,Graúna
+brazil,cl,Guajará
+brazil,cl,Guaporé
+brazil,cl,Gurupá
+brazil,cl,Gurupi
+brazil,cl,Guanabara
+brazil,cl,Guarujá
+brazil,cl,Guaratuba
+brazil,cl,Gravatai
+brazil,cl,Bracuí
+brazil,cl,Benevente
+brazil,cl,Bocaina
+brazil,cl,Babitonga
+brazil,cl,Macaé
+brazil,cl,Maracanã
+brazil,cl,Mangaratiba
+brazil,cl,Araguari
+brazil,cl,Marlim
+brazil,cl,Barracuda
+brazil,cl,Dourado
+brazil,cl,Albacora
+brazil,cl,Anequim
+brazil,cl,Mearim
+brazil,cl,Iguatemi
+brazil,cl,Aratu
+brazil,cl,Atalaia
+brazil,cl,Araçatuba
+brazil,cl,Albardão
+brazil,cl,Tritão
+brazil,cl,Triunfo
+brazil,cl,Caboclo
+brazil,cl,Paraguassú
+brazil,cl,Rio Tocantins
+brazil,cl,Rio Xingu
+brazil,cl,Rio Solimões
+brazil,cl,Rio Negro
+brazil,cl,Mangangá
+brazil,cl,Poraquê
+brazil,cl,Cruzeiro do Sul
+brazil,cl,Bauru
+argentina,bb,Buenos Aires
+argentina,bb,Catamarca
+argentina,bb,Chaco
+argentina,bb,Chubut
+argentina,bb,Córdova
+argentina,bb,Corrientes
+argentina,bb,Entre Ríos
+argentina,bb,Formosa
+argentina,bb,Jujuy
+argentina,bb,La Pampa
+argentina,bb,La Rioja
+argentina,bb,Mendoza
+argentina,bb,Misiones
+argentina,bb,Neuquén
+argentina,bb,Río Negro
+argentina,bb,Salta
+argentina,bb,San Juan
+argentina,bb,San Luis
+argentina,bb,Santa Cruz
+argentina,bb,Santa Fé
+argentina,bb,Santiago del Estero
+argentina,bb,Tierra del Fuego
+argentina,bb,Tucumán
+argentina,bb,Mariano Moreno
+argentina,bb,Independencia
+argentina,bb,Rivadavia
+argentina,bb,Libertad
+argentina,bb,Rio de la Plata
+argentina,bb,Santísima Trinidad
+argentina,bc,Buenos Aires
+argentina,bc,Catamarca
+argentina,bc,Chaco
+argentina,bc,Chubut
+argentina,bc,Córdova
+argentina,bc,Corrientes
+argentina,bc,Entre Ríos
+argentina,bc,Formosa
+argentina,bc,Jujuy
+argentina,bc,La Pampa
+argentina,bc,La Rioja
+argentina,bc,Mendoza
+argentina,bc,Misiones
+argentina,bc,Neuquén
+argentina,bc,Río Negro
+argentina,bc,Salta
+argentina,bc,San Juan
+argentina,bc,San Luis
+argentina,bc,Santa Cruz
+argentina,bc,Santa Fé
+argentina,bc,Santiago del Estero
+argentina,bc,Tierra del Fuego
+argentina,bc,Tucumán
+argentina,bc,Mariano Moreno
+argentina,bc,Independencia
+argentina,bc,Rivadavia
+argentina,bc,Libertad
+argentina,bc,Rio de la Plata
+argentina,bc,Santísima Trinidad
+argentina,ca,General Brown
+argentina,ca,Almirante Brown
+argentina,ca,Veinticinco de Mayo
+argentina,ca,Almirante Storni
+argentina,ca,Azopardo
+argentina,ca,Independencia
+argentina,ca,Piedrabuena
+argentina,ca,Espora
+argentina,ca,Rosales
+argentina,ca,Spiro
+argentina,ca,Gómez Roca
+argentina,ca,Carlos Robinson
+argentina,ca,Enrique Guillermo Parker
+argentina,ca,Puerto Deseado
+argentina,ca,Buenos Aires
+argentina,ca,Rivadavia
+argentina,ca,Francis Drummond
+argentina,ca,General Belgrano
+argentina,ca,Guillermo Enrique Granville
+argentina,ca,Hércules
+argentina,ca,Heroína
+argentina,ca,Libertad
+argentina,ca,La Argentina
+argentina,ca,Murature
+argentina,ca,Nueve de Julio
+argentina,ca,Paraná
+argentina,ca,Patagonia
+argentina,ca,República
+argentina,ca,Santiago del Estero
+argentina,ca,Santísima Trinidad
+argentina,ca,Sarandí
+argentina,ca,Segui
+argentina,ca,Tucumán
+argentina,cl,General Brown
+argentina,cl,Almirante Brown
+argentina,cl,Veinticinco de Mayo
+argentina,cl,Almirante Storni
+argentina,cl,Azopardo
+argentina,cl,Independencia
+argentina,cl,Piedrabuena
+argentina,cl,Espora
+argentina,cl,Rosales
+argentina,cl,Spiro
+argentina,cl,Gómez Roca
+argentina,cl,Carlos Robinson
+argentina,cl,Enrique Guillermo Parker
+argentina,cl,Puerto Deseado
+argentina,cl,Buenos Aires
+argentina,cl,Rivadavia
+argentina,cl,Francis Drummond
+argentina,cl,General Belgrano
+argentina,cl,Guillermo Enrique Granville
+argentina,cl,Hércules
+argentina,cl,Heroína
+argentina,cl,Libertad
+argentina,cl,La Argentina
+argentina,cl,Murature
+argentina,cl,Nueve de Julio
+argentina,cl,Paraná
+argentina,cl,Patagonia
+argentina,cl,República
+argentina,cl,Santiago del Estero
+argentina,cl,Santísima Trinidad
+argentina,cl,Sarandí
+argentina,cl,Segui
+argentina,cl,Tucumán
+chile,bb,Almirante Cochrane
+chile,bb,Blanco Encalada
+chile,bb,Huáscar
+chile,bb,O'Higgins
+chile,bb,Libertad
+chile,bb,Constitución
+chile,bb,Almirante Latorre
+chile,bb,Capitán Prat
+chile,bb,Almirante Riveros
+chile,bb,Almirante Williams
+chile,bb,Almirante Condell
+chile,bb,Almirante Lynch
+chile,bb,General Carrera
+chile,bb,General Baquedano
+chile,bb,Almirante Simpson
+chile,bb,Capitán Thompson
+chile,bb,Almirante Jorge Montt
+chile,bb,Santiago
+chile,bc,Almirante Cochrane
+chile,bc,Blanco Encalada
+chile,bc,Huáscar
+chile,bc,O'Higgins
+chile,bc,Libertad
+chile,bc,Constitución
+chile,bc,Almirante Latorre
+chile,bc,Capitán Prat
+chile,bc,Almirante Riveros
+chile,bc,Almirante Williams
+chile,bc,Almirante Condell
+chile,bc,Almirante Lynch
+chile,bc,General Carrera
+chile,bc,General Baquedano
+chile,bc,Almirante Simpson
+chile,bc,Capitán Thompson
+chile,bc,Almirante Jorge Montt
+chile,bc,Santiago
+chile,ca,Capitán Prat
+chile,ca,Esmeralda
+chile,ca,Valparaiso
+chile,ca,Chacabuco
+chile,ca,Anibal Pinto
+chile,ca,Presidente Errázuriz
+chile,ca,O'Higgins
+chile,ca,General Carrera
+chile,ca,General Baquedano
+chile,ca,Diego Portales
+chile,ca,Valdivia
+chile,ca,Concepción
+chile,ca,Magallanes
+chile,ca,Manuel Rodríguez

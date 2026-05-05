@@ -49,6 +49,7 @@ PLAYER_ACCURACY_TECH = {
     "tactics_comm_end": 24,
 }
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
+NAR_SAFE_NAME_MARKER = "codex_nar_safe_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
@@ -324,6 +325,22 @@ def load_hull_targets() -> dict[tuple[str, int], str]:
     return targets
 
 
+def load_nar_safe_ship_names() -> list[dict[str, str]]:
+    path = get_script_root() / "data" / "nar_safe_ship_names.csv"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return [
+            {
+                "country": row["country"].strip(),
+                "shipType": row["shipType"].strip(),
+                "nameUi": row["nameUi"].strip(),
+            }
+            for row in csv.DictReader(handle)
+            if row.get("country") and row.get("shipType") and row.get("nameUi")
+        ]
+
+
 def patch_params(text: str) -> tuple[str, int]:
     prefix, rows, final_newline = split_table(text)
     columns = colmap(rows[0])
@@ -501,6 +518,21 @@ def patch_ship_names(text: str) -> tuple[str, int]:
                 rows.append(row)
                 existing.add(key)
                 changed += 1
+    for name_row in load_nar_safe_ship_names():
+        key = (name_row["country"], name_row["shipType"], name_row["nameUi"])
+        if key in existing:
+            continue
+        max_id += 1
+        row = [""] * header_len
+        row[columns["@name"]] = str(max_id)
+        row[columns["nameUi"]] = name_row["nameUi"]
+        row[columns["country"]] = name_row["country"]
+        row[columns["shipType"]] = name_row["shipType"]
+        if marker_index is not None:
+            row[marker_index] = NAR_SAFE_NAME_MARKER
+        rows.append(row)
+        existing.add(key)
+        changed += 1
     return join_table(prefix, rows, final_newline), changed
 
 

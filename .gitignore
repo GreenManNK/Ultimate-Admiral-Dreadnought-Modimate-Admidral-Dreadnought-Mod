@@ -8,3 +8,4 @@
 *.log
 backup_*/
 __pycache__/
+_incoming/
