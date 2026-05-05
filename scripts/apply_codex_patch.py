@@ -54,6 +54,7 @@ FAMOUS_NAME_MARKER = "codex_famous_people_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
 FAMOUS_NAME_COUNTRIES = ("britain", "france", "germany", "usa", "russia", "italy", "austria", "japan", "spain", "china")
 FAMOUS_NAME_SHIP_TYPES = ("bb", "bc", "ca", "cl", "dd", "tb", "ss")
+INVALID_MISSION_TECH_TYPES = {"gun_small", "gun_medium", "gun_large", "gun_verylarge", "gun_xlarge"}
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
     "bc": 160,
@@ -317,6 +318,22 @@ def remove_function_tokens(value: str, names: set[str]) -> str:
     return ", ".join(kept) if removed else value
 
 
+def remove_tech_tokens_by_type(value: str, invalid_types: set[str]) -> str:
+    if not value:
+        return value
+    tokens = [token.strip() for token in value.split(",") if token.strip()]
+    kept = []
+    removed = False
+    pattern = re.compile(r"^tech\s*\(\s*([^;\)\s]+)")
+    for token in tokens:
+        match = pattern.match(token)
+        if match and match.group(1) in invalid_types:
+            removed = True
+            continue
+        kept.append(token)
+    return ", ".join(kept) if removed else value
+
+
 def load_hull_targets() -> dict[tuple[str, int], str]:
     path = get_script_root() / "data" / "hull_tonnage_max_400k.csv"
     if not path.exists():
@@ -467,6 +484,22 @@ def patch_technologies(text: str) -> tuple[str, int]:
     return join_table(prefix, rows, final_newline), changed
 
 
+def patch_missions(text: str) -> tuple[str, int]:
+    prefix, rows, final_newline = split_table(text)
+    columns = colmap(rows[0])
+    challenge_columns = [columns[name] for name in ("ch1", "ch2", "ch3", "ch4") if name in columns]
+    changed = 0
+    for row in rows[1:]:
+        for index in challenge_columns:
+            if len(row) <= index or "tech(gun_" not in row[index]:
+                continue
+            updated = remove_tech_tokens_by_type(row[index], INVALID_MISSION_TECH_TYPES)
+            if updated != row[index]:
+                row[index] = updated
+                changed += 1
+    return join_table(prefix, rows, final_newline), changed
+
+
 def patch_ai_personalities(text: str) -> tuple[str, int]:
     prefix, rows, final_newline = split_table(text)
     columns = colmap(rows[0])
@@ -586,6 +619,7 @@ def patch_resources(game_data: Path, dry_run: bool) -> dict[str, int]:
         "partModels": patch_part_models,
         "compTypes": patch_comp_types,
         "technologies": patch_technologies,
+        "missions": patch_missions,
         "aiPersonalities": patch_ai_personalities,
         "shipNames": patch_ship_names,
     }

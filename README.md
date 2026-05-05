@@ -16,6 +16,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Small TB/DD hull tonnage limits raised again to reduce random-ship generator weight failures and log spam.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
 - Campaign battle/fleet generation reduced to lower turn-processing load.
+- Mission challenge tech references sanitized so obsolete `gun_small`/`gun_large` style tech types no longer spam errors during game data load.
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Custom reserve ship-name pools added for USA and Japan so mass-built player fleets get names instead of falling back to numeric hull labels.
 - Safe NAR ship-name rows added for Brazil, Argentina, and Chile; placeholder names are skipped and rows are marker-tagged to avoid duplicate additions.

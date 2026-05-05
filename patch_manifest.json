@@ -98,6 +98,8 @@
       "duplicate_playerdata",
       "il2cpp_exception",
       "null_reference",
+      "invalid_tech_type",
+      "gamedata_assertion",
       "ship_generation_fail",
       "critical_move_port",
       "boxcollider_warning",
@@ -105,6 +107,16 @@
       "route_spike",
       "asset_unload_spike"
     ]
+  },
+  "mission_load_fix": {
+    "invalid_tech_types_removed_from_challenges": [
+      "gun_small",
+      "gun_medium",
+      "gun_large",
+      "gun_verylarge",
+      "gun_xlarge"
+    ],
+    "valid_mission_tech_references_preserved": true
   },
   "save_player_accuracy_hotfix": {
     "aim_control_end": 14,

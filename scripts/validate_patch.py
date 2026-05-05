@@ -27,6 +27,7 @@ FAMOUS_NAME_MARKER = "codex_famous_people_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
 FAMOUS_NAME_COUNTRIES = ("britain", "france", "germany", "usa", "russia", "italy", "austria", "japan", "spain", "china")
 FAMOUS_NAME_SHIP_TYPES = ("bb", "bc", "ca", "cl", "dd", "tb", "ss")
+INVALID_MISSION_TECH_TYPES = {"gun_small", "gun_medium", "gun_large", "gun_verylarge", "gun_xlarge"}
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
     "bc": 160,
@@ -108,7 +109,7 @@ def main():
     for obj in env.objects:
         if obj.type.name == "TextAsset":
             d = obj.read()
-            if d.m_Name in {"params", "parts", "partModels", "players", "compTypes", "technologies", "aiPersonalities", "shipNames"}:
+            if d.m_Name in {"params", "parts", "partModels", "players", "compTypes", "technologies", "missions", "aiPersonalities", "shipNames"}:
                 texts[d.m_Name] = get_text(d)
 
     params = dict_rows(texts["params"])
@@ -283,6 +284,17 @@ def main():
     tech_mods = [row.get("@name") for row in ai if data_name(row) and "TechMod(" in (row.get("aiParams") or "")]
     if ai_failures or tech_mods:
         raise AssertionError({"ai_caps": ai_failures, "tech_mods": tech_mods})
+
+    missions = dict_rows(texts["missions"])
+    invalid_mission_techs = []
+    for row in missions:
+        for column in ("ch1", "ch2", "ch3", "ch4"):
+            cell = row.get(column) or ""
+            for tech_type in INVALID_MISSION_TECH_TYPES:
+                if f"tech({tech_type}" in cell:
+                    invalid_mission_techs.append((row.get("@name"), column, tech_type))
+    if invalid_mission_techs:
+        raise AssertionError(f"invalid mission tech references remain: {invalid_mission_techs[:10]}")
 
     ship_names = dict_rows(texts["shipNames"])
     bad_scandinavia = [

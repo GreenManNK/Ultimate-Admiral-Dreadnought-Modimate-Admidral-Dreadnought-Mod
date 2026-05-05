@@ -26,6 +26,16 @@ RULES = (
         "Null reference spam. Usually bad table rows, invalid names, or broken campaign objects.",
     ),
     (
+        "invalid_tech_type",
+        re.compile(r"invalid tech type:\s*([\w_]+)", re.I),
+        "Mission or data table references a tech type that does not exist. Run the patcher to sanitize missions.",
+    ),
+    (
+        "gamedata_assertion",
+        re.compile(r"GameData\.PostProcessAll|Exception:\s*assertion failed", re.I),
+        "GameData post-processing failed. Fix invalid table references before loading a campaign.",
+    ),
+    (
         "ship_generation_fail",
         re.compile(r"Generate random ship.*failed|random ship.*failed", re.I),
         "Random ship generator failed. Hull tonnage, allowed parts, or randParts rules may be too tight.",
