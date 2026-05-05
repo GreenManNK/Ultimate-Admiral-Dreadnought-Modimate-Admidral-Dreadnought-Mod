@@ -132,14 +132,32 @@
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
-    "tonnageMax_multiplier": 2.4,
-    "tonnageMax_cap": 400000,
+    "source_file": "data/hull_tonnage_balanced.csv",
+    "tonnageMax_multiplier": null,
+    "tonnageMax_cap": {
+      "bb": 180000,
+      "bc": 140000,
+      "ca": 70000,
+      "cl": 45000,
+      "dd": 18000,
+      "tb": 6000,
+      "tr": 72000
+    },
+    "tonnageMax_floor": {
+      "cl": 30000,
+      "dd": 15000,
+      "tb": 6000,
+      "tr": 72000
+    },
     "tonnageMin_unchanged": true,
     "representative_values": {
-      "bb_7_bismarck": 400000,
-      "bb_6": 400000,
-      "bb_6_iowa": 392400,
-      "bb_5": 345600,
+      "bb_7_bismarck": 180000,
+      "bb_6": 180000,
+      "bb_6_iowa": 180000,
+      "bb_5": 180000,
+      "bc_5_assault_russia": 140000,
+      "ca_5_russia_heavy": 70000,
+      "cl_6_cleveland": 45000,
       "dd_1": 15000,
       "tb_lowbow": 6000,
       "tr": 72000
@@ -229,7 +247,7 @@
   "safe_patch_files": [
     "scripts/apply_codex_patch.py",
     "scripts/validate_patch.py",
-    "data/hull_tonnage_max_400k.csv",
+    "data/hull_tonnage_balanced.csv",
     "requirements.txt"
   ]
 }

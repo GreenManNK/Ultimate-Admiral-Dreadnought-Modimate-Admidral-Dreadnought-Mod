@@ -233,10 +233,13 @@ def main():
     if len(hulls) != 518 or hull_bad_tonnage:
         raise AssertionError({"hull_count": len(hulls), "bad_tonnage": hull_bad_tonnage[:10]})
     representative_hull_values = {
-        "bb_7_bismarck": [400000.0],
-        "bb_6": [400000.0],
-        "bb_6_iowa": [392400.0],
-        "bb_5": [345600.0],
+        "bb_7_bismarck": [180000.0],
+        "bb_6": [180000.0],
+        "bb_6_iowa": [180000.0],
+        "bb_5": [180000.0],
+        "bc_5_assault_russia": [140000.0],
+        "ca_5_russia_heavy": [70000.0],
+        "cl_6_cleveland": [45000.0],
         "dd_1": [15000.0],
         "tb_lowbow": [6000.0],
         "tr": [72000.0],
@@ -245,6 +248,48 @@ def main():
         actual = hull_values.get(name)
         if actual != expected:
             raise AssertionError(f"hull tonnage {name}: expected {expected}, got {actual}")
+    hull_caps = {
+        "bb": 180000.0,
+        "bc": 140000.0,
+        "ca": 70000.0,
+        "cl": 45000.0,
+        "dd": 18000.0,
+        "tb": 6000.0,
+        "tr": 72000.0,
+    }
+    hull_floors = {
+        "cl": 30000.0,
+        "dd": 15000.0,
+        "tb": 6000.0,
+        "tr": 72000.0,
+    }
+    def hull_group(name):
+        if name.startswith("bc_"):
+            return "bc"
+        if name.startswith("ca_"):
+            return "ca"
+        if name.startswith(("cl_", "cl1_")):
+            return "cl"
+        if name.startswith("dd_"):
+            return "dd"
+        if name.startswith("tb_"):
+            return "tb"
+        if name.startswith("tr"):
+            return "tr"
+        return "bb"
+    cap_failures = []
+    floor_failures = []
+    for row in hulls:
+        name = row.get("@name") or ""
+        group = hull_group(name)
+        ton_max = float(row.get("tonnageMax") or 0)
+        if ton_max > hull_caps[group]:
+            cap_failures.append((name, ton_max, hull_caps[group]))
+        floor = hull_floors.get(group)
+        if floor is not None and ton_max < floor:
+            floor_failures.append((name, ton_max, floor))
+    if cap_failures or floor_failures:
+        raise AssertionError({"hull_cap_failures": cap_failures[:10], "hull_floor_failures": floor_failures[:10]})
 
     comp = dict_rows(texts["compTypes"])
     if any(data_name(row) and (row.get("shipTypes") or "").strip() for row in comp):

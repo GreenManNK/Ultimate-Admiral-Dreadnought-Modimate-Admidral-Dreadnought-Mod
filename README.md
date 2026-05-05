@@ -12,8 +12,8 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
-- Hull tonnage limits raised safely: all existing hull `tonnageMax` values raised again with a 400,000 ton cap; `tonnageMin` values left unchanged.
-- Small TB/DD hull tonnage limits raised again to reduce random-ship generator weight failures and log spam.
+- Hull tonnage limits rebalanced: BB/BC/CA/CL/DD/TB/TR caps are class-based instead of the previous 400,000 ton super-cap; `tonnageMin` values are left unchanged.
+- Small TB/DD/CL hull floors are kept high enough to reduce random-ship generator weight failures and log spam.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
 - Campaign battle/fleet generation reduced to lower turn-processing load.
 - Mission challenge tech references sanitized so obsolete `gun_small`/`gun_large` style tech types no longer spam errors during game data load.
@@ -28,7 +28,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed so player ships under construction have at most 6 months remaining; AI build queues are not accelerated.
 - Existing saves hotfixed to remove AI ships still under construction and clean their task-force route references, reducing turn-processing load without touching player ships.
 - Existing saves hotfixed to sanitize task-force routes by removing stale or duplicate ship references without deleting valid ships.
-- Existing saves normalized so player saved ship designs use their previous max-tonnage value plus a 35% margin, instead of stale underweight limits or an excessive 400k value.
+- Existing saves keep already-built ships intact; the balanced hull caps affect new/refit design limits instead of deleting player ships.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
 - Construction economy normalized: new-build time reduced further for visibility, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
