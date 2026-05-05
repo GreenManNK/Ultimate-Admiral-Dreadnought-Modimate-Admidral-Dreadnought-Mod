@@ -23,7 +23,10 @@ AI_BUILD_STATUS = 2
 SHIP_PORT_FIELDS = (73, 74, 81)
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
 NAR_SAFE_NAME_MARKER = "codex_nar_safe_ship_name_pool"
+FAMOUS_NAME_MARKER = "codex_famous_people_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
+FAMOUS_NAME_COUNTRIES = ("britain", "france", "germany", "usa", "russia", "italy", "austria", "japan", "spain", "china")
+FAMOUS_NAME_SHIP_TYPES = ("bb", "bc", "ca", "cl", "dd", "tb", "ss")
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
     "bc": 160,
@@ -71,6 +74,16 @@ def load_nar_safe_ship_names():
             )
             for row in csv.DictReader(handle)
             if row.get("country") and row.get("shipType") and row.get("nameUi")
+        ]
+
+
+def load_famous_people_ship_names():
+    path = Path(__file__).resolve().parents[1] / "data" / "famous_people_ship_names.csv"
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return [
+            row["nameUi"].strip()
+            for row in csv.DictReader(handle)
+            if row.get("nameUi") and row["nameUi"].strip()
         ]
 
 
@@ -309,6 +322,18 @@ def main():
         raise AssertionError(f"NAR safe ship names missing: {missing_nar_names[:10]}")
     if nar_marker_count < len(load_nar_safe_ship_names()):
         raise AssertionError(f"NAR safe ship name marker count too low: expected {len(load_nar_safe_ship_names())}, got {nar_marker_count}")
+    missing_famous_names = [
+        (country, ship_type, famous_name)
+        for famous_name in load_famous_people_ship_names()
+        for country in FAMOUS_NAME_COUNTRIES
+        for ship_type in FAMOUS_NAME_SHIP_TYPES
+        if (country, ship_type, famous_name) not in ship_name_keys
+    ]
+    if missing_famous_names:
+        raise AssertionError(f"famous people ship names missing: {missing_famous_names[:10]}")
+    famous_marker_count = sum(1 for row in ship_names if data_name(row) and row.get("#infoLink") == FAMOUS_NAME_MARKER)
+    if famous_marker_count < len(FAMOUS_NAME_COUNTRIES) * len(FAMOUS_NAME_SHIP_TYPES):
+        raise AssertionError(f"famous people marker count too low: {famous_marker_count}")
 
     save_status = []
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):

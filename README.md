@@ -19,6 +19,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Global new-campaign cash and shipyard start restored to vanilla-safe levels so AI no longer receives player-grade boosts.
 - Custom reserve ship-name pools added for USA and Japan so mass-built player fleets get names instead of falling back to numeric hull labels.
 - Safe NAR ship-name rows added for Brazil, Argentina, and Chile; placeholder names are skipped and rows are marker-tagged to avoid duplicate additions.
+- Famous-people ship-name pool added for the ten major campaign nations across all ship classes, using a curated deceased/historical/public-figure list and duplicate-safe marker tags.
 - Existing saves hotfixed to player shipyard >= 15,000,000 and funds ~= 500B.
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to move AI ships away from player-owned ports, preventing repeated `CRITICAL ERROR Move ... to port ...` log spam.

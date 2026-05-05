@@ -147,6 +147,36 @@
     "placeholder_rows_skipped": true,
     "duplicate_name_keys_skipped": true
   },
+  "famous_people_ship_names": {
+    "marker": "codex_famous_people_ship_name_pool",
+    "source_file": "data/famous_people_ship_names.csv",
+    "names": 141,
+    "countries": [
+      "britain",
+      "france",
+      "germany",
+      "usa",
+      "russia",
+      "italy",
+      "austria",
+      "japan",
+      "spain",
+      "china"
+    ],
+    "ship_types": [
+      "bb",
+      "bc",
+      "ca",
+      "cl",
+      "dd",
+      "tb",
+      "ss"
+    ],
+    "maximum_rows_before_existing-name_skips": 9870,
+    "rows_applied_after_existing-name_skips": 9863,
+    "living_people_avoided": true,
+    "duplicate_name_keys_skipped": true
+  },
   "custom_ship_names": {
     "marker": "codex_custom_name_pool",
     "countries": [

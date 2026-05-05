@@ -50,7 +50,10 @@ PLAYER_ACCURACY_TECH = {
 }
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
 NAR_SAFE_NAME_MARKER = "codex_nar_safe_ship_name_pool"
+FAMOUS_NAME_MARKER = "codex_famous_people_ship_name_pool"
 CUSTOM_NAME_COUNTRIES = ("usa", "japan")
+FAMOUS_NAME_COUNTRIES = ("britain", "france", "germany", "usa", "russia", "italy", "austria", "japan", "spain", "china")
+FAMOUS_NAME_SHIP_TYPES = ("bb", "bc", "ca", "cl", "dd", "tb", "ss")
 CUSTOM_NAME_COUNTS = {
     "bb": 240,
     "bc": 160,
@@ -341,6 +344,18 @@ def load_nar_safe_ship_names() -> list[dict[str, str]]:
         ]
 
 
+def load_famous_people_ship_names() -> list[str]:
+    path = get_script_root() / "data" / "famous_people_ship_names.csv"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return [
+            row["nameUi"].strip()
+            for row in csv.DictReader(handle)
+            if row.get("nameUi") and row["nameUi"].strip()
+        ]
+
+
 def patch_params(text: str) -> tuple[str, int]:
     prefix, rows, final_newline = split_table(text)
     columns = colmap(rows[0])
@@ -533,6 +548,23 @@ def patch_ship_names(text: str) -> tuple[str, int]:
         rows.append(row)
         existing.add(key)
         changed += 1
+    for famous_name in load_famous_people_ship_names():
+        for country in FAMOUS_NAME_COUNTRIES:
+            for ship_type in FAMOUS_NAME_SHIP_TYPES:
+                key = (country, ship_type, famous_name)
+                if key in existing:
+                    continue
+                max_id += 1
+                row = [""] * header_len
+                row[columns["@name"]] = str(max_id)
+                row[columns["nameUi"]] = famous_name
+                row[columns["country"]] = country
+                row[columns["shipType"]] = ship_type
+                if marker_index is not None:
+                    row[marker_index] = FAMOUS_NAME_MARKER
+                rows.append(row)
+                existing.add(key)
+                changed += 1
     return join_table(prefix, rows, final_newline), changed
 
 
