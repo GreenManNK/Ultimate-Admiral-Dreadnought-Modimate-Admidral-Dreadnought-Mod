@@ -12,7 +12,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
-- Hull tonnage limits raised to 250% of vanilla with a 300,000 ton cap; `tonnageMin` values are left unchanged and save ship displacement is not edited.
+- Hull tonnage limits raised to 400% of vanilla with a 400,000 ton cap; `tonnageMin` values are left unchanged and save ship displacement is not edited.
 - Ship material/armor and equipment weight values are rebalanced separately so heavy armor, towers, funnels, barbettes, superstructure, conning towers, and torpedo protection consume less displacement without raising hull caps.
 - Speed setup weight relief: engine horsepower weight coefficient, high-speed multipliers, and horsepower-to-funnel-capacity demand are reduced so increasing knots does not consume displacement as aggressively.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
