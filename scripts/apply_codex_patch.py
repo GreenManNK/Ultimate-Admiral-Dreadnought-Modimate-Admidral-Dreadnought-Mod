@@ -335,13 +335,24 @@ def remove_tech_tokens_by_type(value: str, invalid_types: set[str]) -> str:
 
 
 def load_hull_targets() -> dict[tuple[str, int], str]:
-    path = get_script_root() / "data" / "hull_tonnage_max_400k.csv"
+    path = get_script_root() / "data" / "hull_tonnage_vanilla.csv"
     if not path.exists():
         raise FileNotFoundError(path)
     targets = {}
     with path.open("r", encoding="utf-8", newline="") as handle:
         for row in csv.DictReader(handle):
             targets[(row["name"], int(row["occurrence"]))] = row["tonnageMax"]
+    return targets
+
+
+def load_part_weight_targets() -> dict[tuple[str, str, int], str]:
+    path = get_script_root() / "data" / "part_weight_reduced_75.csv"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    targets = {}
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            targets[(row["name"], row["type"], int(row["occurrence"]))] = row["weight"]
     return targets
 
 
@@ -412,10 +423,12 @@ def patch_players(text: str) -> tuple[str, int]:
 
 def patch_parts(text: str) -> tuple[str, int]:
     hull_targets = load_hull_targets()
+    part_weight_targets = load_part_weight_targets()
     prefix, rows, final_newline = split_table(text)
     columns = colmap(rows[0])
     changed = 0
-    occurrence = defaultdict(int)
+    hull_occurrence = defaultdict(int)
+    part_weight_occurrence = defaultdict(int)
     for row in rows[1:]:
         if len(row) <= max(columns["@name"], columns["type"]):
             continue
@@ -436,12 +449,21 @@ def patch_parts(text: str) -> tuple[str, int]:
                 row[columns["param"]] = updated
                 changed += 1
         if part_type == "hull" and "tonnageMax" in columns:
-            occ = occurrence[name]
-            occurrence[name] += 1
+            occ = hull_occurrence[name]
+            hull_occurrence[name] += 1
             target = hull_targets.get((name, occ))
             if target is not None and len(row) > columns["tonnageMax"] and row[columns["tonnageMax"]] != target:
                 row[columns["tonnageMax"]] = target
                 changed += 1
+        elif "weight" in columns and len(row) > columns["weight"]:
+            key = (name, part_type)
+            occ = part_weight_occurrence[key]
+            target = part_weight_targets.get((name, part_type, occ))
+            if target is not None:
+                part_weight_occurrence[key] += 1
+                if row[columns["weight"]] != target:
+                    row[columns["weight"]] = target
+                    changed += 1
     return join_table(prefix, rows, final_newline), changed
 
 

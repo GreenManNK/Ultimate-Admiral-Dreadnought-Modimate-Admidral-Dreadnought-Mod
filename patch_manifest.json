@@ -94,6 +94,19 @@
     "w_3rd_deck": "0.003157894737",
     "prices_unchanged_by_this_balance": true
   },
+  "part_weight_patch": {
+    "source_file": "data/part_weight_reduced_75.csv",
+    "weight_multiplier_from_vanilla": 0.75,
+    "rows": 2183,
+    "types": [
+      "barbette",
+      "funnel",
+      "special",
+      "tower_main",
+      "tower_sec"
+    ],
+    "hull_rows_excluded": true
+  },
   "save_hotfix_floor": {
     "player_shipyard_tons": 15000000,
     "player_funds_usd": 500000000000
@@ -149,18 +162,17 @@
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
-    "source_file": "data/hull_tonnage_max_400k.csv",
-    "tonnageMax_multiplier": 2.4,
-    "tonnageMax_cap": 400000,
+    "source_file": "data/hull_tonnage_vanilla.csv",
+    "tonnageMax_source": "vanilla backup_original_assets_20260429_231807",
     "tonnageMin_unchanged": true,
     "representative_values": {
-      "bb_7_bismarck": 400000,
-      "bb_6": 400000,
-      "bb_6_iowa": 392400,
-      "bb_5": 345600,
-      "dd_1": 15000,
-      "tb_lowbow": 6000,
-      "tr": 72000
+      "bb_7_bismarck": 130000,
+      "bb_6": 125000,
+      "bb_6_iowa": 109000,
+      "bb_5": 96000,
+      "dd_1": 1100,
+      "tb_lowbow": 500,
+      "tr": 20000
     }
   },
   "stability_patch": {
@@ -247,7 +259,8 @@
   "safe_patch_files": [
     "scripts/apply_codex_patch.py",
     "scripts/validate_patch.py",
-    "data/hull_tonnage_max_400k.csv",
+    "data/hull_tonnage_vanilla.csv",
+    "data/part_weight_reduced_75.csv",
     "requirements.txt"
   ]
 }

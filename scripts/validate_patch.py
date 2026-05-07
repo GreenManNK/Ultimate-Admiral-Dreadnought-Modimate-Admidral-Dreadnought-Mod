@@ -253,18 +253,49 @@ def main():
     if len(hulls) != 518 or hull_bad_tonnage:
         raise AssertionError({"hull_count": len(hulls), "bad_tonnage": hull_bad_tonnage[:10]})
     representative_hull_values = {
-        "bb_7_bismarck": [400000.0],
-        "bb_6": [400000.0],
-        "bb_6_iowa": [392400.0],
-        "bb_5": [345600.0],
-        "dd_1": [15000.0],
-        "tb_lowbow": [6000.0],
-        "tr": [72000.0],
+        "bb_7_bismarck": [130000.0],
+        "bb_6": [125000.0],
+        "bb_6_iowa": [109000.0],
+        "bb_5": [96000.0],
+        "dd_1": [1100.0],
+        "tb_lowbow": [500.0],
+        "tr": [20000.0],
     }
     for name, expected in representative_hull_values.items():
         actual = hull_values.get(name)
         if actual != expected:
             raise AssertionError(f"hull tonnage {name}: expected {expected}, got {actual}")
+
+    script_root = Path(__file__).resolve().parents[1]
+    expected_part_weights = {}
+    with (script_root / "data" / "part_weight_reduced_75.csv").open("r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            expected_part_weights[(row["name"], row["type"], int(row["occurrence"]))] = row["weight"]
+    seen_part_weights = Counter()
+    missing_part_weights = []
+    bad_part_weights = []
+    for row in parts:
+        if not data_name(row):
+            continue
+        name = (row.get("@name") or "").strip()
+        typ = (row.get("type") or "").strip()
+        key_base = (name, typ)
+        occ = seen_part_weights[key_base]
+        key = (name, typ, occ)
+        if key in expected_part_weights:
+            seen_part_weights[key_base] += 1
+            actual = row.get("weight")
+            expected = expected_part_weights[key]
+            if actual != expected:
+                bad_part_weights.append((name, typ, occ, expected, actual))
+    for key in expected_part_weights:
+        if seen_part_weights[(key[0], key[1])] <= key[2]:
+            missing_part_weights.append(key)
+    if missing_part_weights or bad_part_weights:
+        raise AssertionError({
+            "missing_part_weights": missing_part_weights[:10],
+            "bad_part_weights": bad_part_weights[:10],
+        })
 
     comp = dict_rows(texts["compTypes"])
     if any(data_name(row) and (row.get("shipTypes") or "").strip() for row in comp):
