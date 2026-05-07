@@ -107,6 +107,19 @@
     ],
     "hull_rows_excluded": true
   },
+  "speed_weight_patch": {
+    "engine_hp_to_fcap": "0.00075",
+    "engine_weight_coef_mod": "0.00000075",
+    "speed_mult_1": "1.095",
+    "speed_mult_2": "1.0685",
+    "speed_mult_3": "1.08",
+    "speed_mult_4": "1.1",
+    "speed_mult_5": "1.125",
+    "speed_mult_6": "1.15",
+    "speed_mult_7": "1.1625",
+    "speed_mult_8": "1.175",
+    "purpose": "reduce displacement growth when increasing ship design speed without raising hull tonnage caps"
+  },
   "save_hotfix_floor": {
     "player_shipyard_tons": 15000000,
     "player_funds_usd": 500000000000

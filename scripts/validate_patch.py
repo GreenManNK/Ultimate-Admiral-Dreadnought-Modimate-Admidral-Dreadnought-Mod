@@ -219,6 +219,23 @@ def main():
         if actual != expected:
             raise AssertionError(f"material weight param {key}: expected {expected}, got {actual}")
 
+    speed_weight_required = {
+        "engine_hp_to_fcap": "0.00075",
+        "engine_weight_coef_mod": "0.00000075",
+        "speed_mult_1": "1.095",
+        "speed_mult_2": "1.0685",
+        "speed_mult_3": "1.08",
+        "speed_mult_4": "1.1",
+        "speed_mult_5": "1.125",
+        "speed_mult_6": "1.15",
+        "speed_mult_7": "1.1625",
+        "speed_mult_8": "1.175",
+    }
+    for key, expected in speed_weight_required.items():
+        actual = pd.get(key)
+        if actual != expected:
+            raise AssertionError(f"speed weight param {key}: expected {expected}, got {actual}")
+
     parts = dict_rows(texts["parts"])
     country_locked = 0
     needunlock = 0

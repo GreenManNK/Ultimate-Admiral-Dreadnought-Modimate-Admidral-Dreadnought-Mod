@@ -14,6 +14,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Hull obsolete gates removed; campaign start max year kept at 1950.
 - Hull tonnage limits restored to vanilla values; `tonnageMin` values are left unchanged.
 - Ship material/armor and equipment weight values are rebalanced separately so heavy armor, towers, funnels, barbettes, superstructure, conning towers, and torpedo protection consume less displacement without raising hull caps.
+- Speed setup weight relief: engine horsepower weight coefficient, high-speed multipliers, and horsepower-to-funnel-capacity demand are reduced so increasing knots does not consume displacement as aggressively.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
 - Campaign battle/fleet generation reduced to lower turn-processing load.
 - Mission challenge tech references sanitized so obsolete `gun_small`/`gun_large` style tech types no longer spam errors during game data load.
