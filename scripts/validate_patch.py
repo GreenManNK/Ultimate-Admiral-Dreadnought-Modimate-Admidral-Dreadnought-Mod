@@ -21,8 +21,6 @@ PLAYER_ACCURACY_TECH = {
 PLAYER_BUILD_REMAINING_CAP_MONTHS = 6.0
 AI_BUILD_STATUS = 2
 SHIP_PORT_FIELDS = (73, 74, 81)
-SAVE_SHIP_HULL_FIELD = 10
-SAVE_SHIP_TONNAGE_MAX_FIELD = 15
 CUSTOM_NAME_MARKER = "codex_custom_name_pool"
 NAR_SAFE_NAME_MARKER = "codex_nar_safe_ship_name_pool"
 FAMOUS_NAME_MARKER = "codex_famous_people_ship_name_pool"
@@ -88,18 +86,6 @@ def load_famous_people_ship_names():
             for row in csv.DictReader(handle)
             if row.get("nameUi") and row["nameUi"].strip()
         ]
-
-
-def load_save_hull_targets():
-    path = Path(__file__).resolve().parents[1] / "data" / "hull_tonnage_limit_250pct_cap300k.csv"
-    targets = {}
-    with path.open("r", encoding="utf-8", newline="") as handle:
-        for row in csv.DictReader(handle):
-            try:
-                targets[row["name"]] = max(targets.get(row["name"], 0.0), float(row["tonnageMax"]))
-            except ValueError:
-                continue
-    return targets
 
 
 def save_port_owner_map(obj):
@@ -430,7 +416,6 @@ def main():
         raise AssertionError(f"famous people marker count too low: {famous_marker_count}")
 
     save_status = []
-    save_hull_targets = load_save_hull_targets()
     for path in sorted(SAVE_ROOT.glob("save_*.bin")):
         obj = unpack_save(path)
         player_rows = [row for row in obj[6] if isinstance(row, list) and len(row) > 52]
@@ -474,19 +459,6 @@ def main():
                     continue
                 if ship[62] in player_nations and float(ship[77]) < 100:
                     raise AssertionError(f"{path.name}: player ship training below 100: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[77]}")
-                if (
-                    ship[62] in player_nations
-                    and len(ship) > SAVE_SHIP_TONNAGE_MAX_FIELD
-                    and isinstance(ship[SAVE_SHIP_HULL_FIELD], str)
-                    and isinstance(ship[SAVE_SHIP_TONNAGE_MAX_FIELD], (int, float))
-                ):
-                    target_limit = save_hull_targets.get(ship[SAVE_SHIP_HULL_FIELD])
-                    if target_limit is not None and float(ship[SAVE_SHIP_TONNAGE_MAX_FIELD]) + 0.01 < target_limit:
-                        raise AssertionError(
-                            f"{path.name}: player ship hull limit below patch target: "
-                            f"{ship[62]} {ship[60] if len(ship) > 60 else ship[1]} "
-                            f"{ship[SAVE_SHIP_TONNAGE_MAX_FIELD]} < {target_limit}"
-                        )
                 if ship_list_index == 13 and ship[62] in player_nations and isinstance(ship[28], int) and ship[28] < 4:
                     raise AssertionError(f"{path.name}: player surface crew level below 4: {ship[62]} {ship[60] if len(ship) > 60 else ship[1]} {ship[28]}")
                 if (

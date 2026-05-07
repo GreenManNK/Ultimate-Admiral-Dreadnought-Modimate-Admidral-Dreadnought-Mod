@@ -26,7 +26,6 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed to cap AI shipyard at 50,000 tons and AI funds at 5B.
 - Existing saves hotfixed to move AI ships away from player-owned ports, preventing repeated `CRITICAL ERROR Move ... to port ...` log spam.
 - Existing saves hotfixed to boost player-only gunnery: player aim/rangefinder/tactics tech gates raised and player ship/sub training points set to 100.
-- Existing saves hotfixed so player ship records inherit the patched hull tonnage limit while leaving current displacement/build weight untouched.
 - Existing saves hotfixed so player ships under construction have at most 6 months remaining; AI build queues are not accelerated.
 - Existing saves hotfixed to remove AI ships still under construction and clean their task-force route references, reducing turn-processing load without touching player ships.
 - Existing saves hotfixed to sanitize task-force routes by removing stale or duplicate ship references without deleting valid ships.

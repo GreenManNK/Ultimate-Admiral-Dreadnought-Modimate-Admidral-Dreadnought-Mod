@@ -41,8 +41,6 @@ AI_BUILD_STATUS = 2
 SAVE_SURFACE_SHIPS_INDEX = 13
 SAVE_SUBMARINES_INDEX = 14
 SAVE_TASK_FORCES_INDEX = 22
-SAVE_SHIP_HULL_FIELD = 10
-SAVE_SHIP_TONNAGE_MAX_FIELD = 15
 SHIP_PORT_FIELDS = (73, 74, 81)
 PLAYER_ACCURACY_TECH = {
     "aim_control_end": 14,
@@ -355,16 +353,6 @@ def load_hull_targets() -> dict[tuple[str, int], str]:
         for row in csv.DictReader(handle):
             targets[(row["name"], int(row["occurrence"]))] = row["tonnageMax"]
     return targets
-
-
-def load_save_hull_targets() -> dict[str, float]:
-    targets = defaultdict(float)
-    for (name, _occurrence), value in load_hull_targets().items():
-        try:
-            targets[name] = max(targets[name], float(value))
-        except ValueError:
-            continue
-    return dict(targets)
 
 
 def load_part_weight_targets() -> dict[tuple[str, str, int], str]:
@@ -839,7 +827,6 @@ def patch_save_object(obj) -> int:
     human_nations = {row[1] for row in players if isinstance(row, list) and len(row) > 52 and row[2] is True}
     port_owner = save_port_owner_map(obj)
     fallback_ports = {}
-    save_hull_targets = load_save_hull_targets()
     for row in players:
         if not isinstance(row, list) or len(row) <= 52:
             continue
@@ -891,15 +878,6 @@ def patch_save_object(obj) -> int:
                 continue
             if not (len(ship) > 77):
                 continue
-            if (
-                len(ship) > SAVE_SHIP_TONNAGE_MAX_FIELD
-                and isinstance(ship[SAVE_SHIP_HULL_FIELD], str)
-                and isinstance(ship[SAVE_SHIP_TONNAGE_MAX_FIELD], (int, float))
-            ):
-                target_limit = save_hull_targets.get(ship[SAVE_SHIP_HULL_FIELD])
-                if target_limit is not None and float(ship[SAVE_SHIP_TONNAGE_MAX_FIELD]) < target_limit:
-                    ship[SAVE_SHIP_TONNAGE_MAX_FIELD] = target_limit
-                    changed += 1
             if float(ship[77]) < PLAYER_SHIP_TRAINING_POINTS:
                 ship[77] = PLAYER_SHIP_TRAINING_POINTS
                 changed += 1
