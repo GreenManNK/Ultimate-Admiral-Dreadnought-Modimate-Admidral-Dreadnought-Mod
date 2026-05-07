@@ -175,17 +175,20 @@
   },
   "hull_tonnage_patch": {
     "hull_count": 518,
-    "source_file": "data/hull_tonnage_vanilla.csv",
+    "source_file": "data/hull_tonnage_limit_250pct_cap300k.csv",
     "tonnageMax_source": "vanilla backup_original_assets_20260429_231807",
+    "tonnageMax_multiplier": 2.5,
+    "tonnageMax_cap": 300000,
     "tonnageMin_unchanged": true,
+    "save_ship_displacement_unchanged": true,
     "representative_values": {
-      "bb_7_bismarck": 130000,
-      "bb_6": 125000,
-      "bb_6_iowa": 109000,
-      "bb_5": 96000,
-      "dd_1": 1100,
-      "tb_lowbow": 500,
-      "tr": 20000
+      "bb_7_bismarck": 300000,
+      "bb_6": 300000,
+      "bb_6_iowa": 272500,
+      "bb_5": 240000,
+      "dd_1": 2750,
+      "tb_lowbow": 1250,
+      "tr": 50000
     }
   },
   "stability_patch": {
@@ -272,6 +275,7 @@
   "safe_patch_files": [
     "scripts/apply_codex_patch.py",
     "scripts/validate_patch.py",
+    "data/hull_tonnage_limit_250pct_cap300k.csv",
     "data/hull_tonnage_vanilla.csv",
     "data/part_weight_reduced_75.csv",
     "requirements.txt"
