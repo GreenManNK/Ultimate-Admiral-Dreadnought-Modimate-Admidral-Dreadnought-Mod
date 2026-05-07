@@ -345,7 +345,7 @@ def remove_tech_tokens_by_type(value: str, invalid_types: set[str]) -> str:
 
 
 def load_hull_targets() -> dict[tuple[str, int], str]:
-    path = get_script_root() / "data" / "hull_tonnage_limit_250pct_cap300k.csv"
+    path = get_script_root() / "data" / "hull_tonnage_vanilla.csv"
     if not path.exists():
         raise FileNotFoundError(path)
     targets = {}
@@ -364,6 +364,14 @@ def load_part_weight_targets() -> dict[tuple[str, str, int], str]:
         for row in csv.DictReader(handle):
             targets[(row["name"], row["type"], int(row["occurrence"]))] = row["weight"]
     return targets
+
+
+def load_technology_tonnage_targets() -> dict[str, str]:
+    path = get_script_root() / "data" / "technology_tonnage_limit_250pct.csv"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        return {row["name"]: row["effect"] for row in csv.DictReader(handle)}
 
 
 def load_nar_safe_ship_names() -> list[dict[str, str]]:
@@ -498,7 +506,9 @@ def patch_part_models(text: str) -> tuple[str, int]:
 
 
 def patch_technologies(text: str) -> tuple[str, int]:
+    tonnage_targets = load_technology_tonnage_targets()
     prefix, rows, final_newline = split_table(text)
+    columns = colmap(rows[0])
     changed = 0
     for row in rows[1:]:
         for index, cell in enumerate(row):
@@ -507,6 +517,11 @@ def patch_technologies(text: str) -> tuple[str, int]:
                 if updated != cell:
                     row[index] = updated
                     changed += 1
+        if "effect" in columns and len(row) > max(columns["@name"], columns["effect"]):
+            target_effect = tonnage_targets.get(row[columns["@name"]].strip())
+            if target_effect is not None and row[columns["effect"]] != target_effect:
+                row[columns["effect"]] = target_effect
+                changed += 1
     return join_table(prefix, rows, final_newline), changed
 
 

@@ -270,13 +270,13 @@ def main():
     if len(hulls) != 518 or hull_bad_tonnage:
         raise AssertionError({"hull_count": len(hulls), "bad_tonnage": hull_bad_tonnage[:10]})
     representative_hull_values = {
-        "bb_7_bismarck": [300000.0],
-        "bb_6": [300000.0],
-        "bb_6_iowa": [272500.0],
-        "bb_5": [240000.0],
-        "dd_1": [2750.0],
-        "tb_lowbow": [1250.0],
-        "tr": [50000.0],
+        "bb_7_bismarck": [130000.0],
+        "bb_6": [125000.0],
+        "bb_6_iowa": [109000.0],
+        "bb_5": [96000.0],
+        "dd_1": [1100.0],
+        "tb_lowbow": [500.0],
+        "tr": [20000.0],
     }
     for name, expected in representative_hull_values.items():
         actual = hull_values.get(name)
@@ -313,6 +313,13 @@ def main():
             "missing_part_weights": missing_part_weights[:10],
             "bad_part_weights": bad_part_weights[:10],
         })
+
+    tech_rows = {row.get("@name"): row for row in dict_rows(texts["technologies"]) if data_name(row)}
+    with (script_root / "data" / "technology_tonnage_limit_250pct.csv").open("r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            actual = (tech_rows.get(row["name"]) or {}).get("effect")
+            if actual != row["effect"]:
+                raise AssertionError(f"technology tonnage effect {row['name']}: expected {row['effect']}, got {actual}")
 
     comp = dict_rows(texts["compTypes"])
     if any(data_name(row) and (row.get("shipTypes") or "").strip() for row in comp):

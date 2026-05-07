@@ -1,0 +1,71 @@
+name,effect
+hull_destroyer_1,tonnage(tb;750)
+hull_destroyer_2,tonnage(tb;1250)
+hull_destroyer_3,tonnage(tb;1750)
+hull_destroyer_4,"tonnage(tb;2000), unlock(tb_highbow_large)"
+hull_destroyer_5,"tonnage(dd;2125), unlock(dd_1;dd_1_japan;dd_1_german;dd_1_austria;dd_1_russia;dd_1_france)"
+hull_destroyer_6,"tonnage(dd;2250), unlock(dd_1_german_large)"
+hull_destroyer_7,"tonnage(dd;2375), unlock(dd_1_austria_large)"
+hull_destroyer_8,tonnage(dd;2500)
+hull_destroyer_9,tonnage(dd;2625)
+hull_destroyer_10,"tonnage(dd;2750), unlock(dd_2;dd_2_japan;dd_2_german)"
+hull_destroyer_11,"tonnage(dd;3000), unlock(dd_2_russia)"
+hull_destroyer_12,"tonnage(dd;3250), unlock(dd_2_france)"
+hull_destroyer_13,tonnage(dd;3500)
+hull_destroyer_14,"tonnage(dd;3750), unlock(dd_3;dd_3_japan;dd_3_german)"
+hull_destroyer_15,"tonnage(dd;4000), unlock(dd_3_russia;dd_3_france)"
+hull_destroyer_16,tonnage(dd;4250)
+hull_destroyer_17,"tonnage(dd;4500), unlock(dd_4_japan)"
+hull_destroyer_18,"tonnage(dd;4750), unlock(dd_4;dd_4_russia;dd_4_france;dd_us_flush)"
+hull_destroyer_19,"tonnage(dd;5500), unlock(dd_5_akizuki_nose_cave_middle;dd_5_nose_small_usa)"
+hull_destroyer_20,"tonnage(dd;6000), unlock(dd_5_akizuki_nose_long;dd_5_nose_small_german;dd_5_nose_generic_small;dd_5_stern_small_russia;dd_5_nose_small_france;dd_5_nose_medium_usa)"
+hull_destroyer_21,"tonnage(dd;6500), unlock(dd_5_akizuki_nose_long;dd_5_stern_large_italian;dd_5_stern_large_russia;dd_5_nose_large_britain;dd_5_nose_large_usa;dd_5_akizuki_nose_short)"
+hull_destroyer_22,"tonnage(dd;7000), unlock(dd_5_nose_large_generic)"
+hull_destroyer_23,"tonnage(dd;7500), unlock(dd_5_nose_large_france;dd_5_nose_large_german;dd_5_shimakaze)"
+hull_destroyer_24,tonnage(dd;8250)
+hull_destroyer_25,tonnage(dd;8750)
+hull_destroyer_26,tonnage(dd;10000)
+hull_destroyer_27,"tonnage(dd;18750), unlock(dd_6_nose_large_italian;dd_7_fletcher_style_big;dd_7_fletcher_style_small;dd_7_daring_style_big;dd_7_daring_style_small;dd_7_german_hybrid_dd;dd_7_france_dd;dd_7_russia_dd;dd_7_flushdeck_dd_small;dd_7_flushdeck_dd_large;dd_us_flush;dd_8_hybrid_cruiser_gen;dd_8_hybrid_cruiser_italy;dd_8_france_dd;dd_8_russia_dd)"
+hull_cruiser_1,"tonnage(cl;8750), unlock(cl_2_emden)"
+hull_cruiser_2,"tonnage(cl;9375), unlock(cl_1_medium_strbow;cl_1_medium;cl_1_medium_germany;cl_1_rambow_france;cl_1_medium_russia)"
+hull_cruiser_3,"tonnage(cl;10000), unlock(cl_2_rambow;cl_2_straightbow)"
+hull_cruiser_4,"tonnage(cl;11250), unlock(cl_novik)"
+hull_cruiser_5,tonnage(cl;12500)
+hull_cruiser_6,"tonnage(cl;15000), unlock(cl_3_france)"
+hull_cruiser_7,tonnage(cl;16250)
+hull_cruiser_8,"tonnage(cl;17500), unlock(cl_2_medium;cl_2_medium_strbow;ca_3_warrior_pisa;cl_2_medium_germany;cl_2_medium_russia)"
+hull_cruiser_9,"tonnage(cl;20000), unlock(cl_4_france;cl_3;cl_3_emden;ca_3_warrior;cl_3_usa_exp)"
+hull_cruiser_10,"tonnage(cl;21250), unlock(cl_3_straightbow_tall)"
+hull_cruiser_11,"tonnage(cl;22500), unlock(cl_3_rambow_tall;cl_3_britain;cl_3_japan_small;cl_3_russia;cl_4_france_improved)"
+hull_cruiser_12,tonnage(cl;23750)
+hull_cruiser_13,"tonnage(cl;25000), unlock(cl_3_russia_var)"
+hull_cruiser_14,"tonnage(cl;27500), unlock(cl_3_britain_var2;cl_5_britain_scout)"
+hull_cruiser_15,tonnage(cl;28750)
+hull_cruiser_16,tonnage(cl;30000)
+hull_cruiser_17,"tonnage(cl;33750), unlock(cl_4_omaha;cl_3_britain_var3;cl_5_britain_C_class;cl_5_scout_var1;cl_5_armored_exp;cl_5_armored_exp2;cl_5_armored_exp3;cl_5_armored_exp4)"
+hull_cruiser_18,"tonnage(cl;37500), unlock(cl_3_japan;cl_5_omaha;cl_5_britain_adv_treaty;cl_5_german_treaty;cl_5_german_treaty_fk;cl_5_france_exp;cl_5_france_exp;cl_5_generic1_C_class;cl_5_generic2_C_class;cl_5_russian_light;cl_5_italian_early_condot;cl_3_japan_bigger;cl_5_omaha_base)"
+hull_cruiser_20,"unlock(cl_5_italian;cl_5_italian_small;cl_6_japan;cl_5_japan;cl_5_atlanta;cl_5_guncruiser1;cl_5_escortcruiser;cl_5_escortcruiser_british;cl_5_escortcruiser_france;cl_5_dido;cl_7_dido;cl_6_german_base;cl_5_austria_exp;cl_6_russian_exp;cl_6_russian_exp2;cl_7_japan;cl_6_monte), tonnage(cl;43750)"
+hull_cruiser_21,tonnage(ca;11250)
+hull_cruiser_22,tonnage(ca;12500)
+hull_cruiser_23,tonnage(ca;15000)
+hull_cruiser_24,tonnage(ca;17500)
+hull_cruiser_25,"tonnage(ca;21250), unlock(ca_2;ca_1_italian_exp_small_3mast;ca_2_friedrich;ca_2_rambow_france)"
+hull_cruiser_26,"tonnage(ca;22500), unlock(ca_1_italian_exp_3mast;ca_1_italian_exp_japan_3mast;ca_2_austria_karl)"
+hull_cruiser_27,"tonnage(ca;25000), unlock(ca_2_austria;ca_maine_china)"
+hull_cruiser_28,"tonnage(ca;27500), unlock(ca_3;ca_3_russia)"
+hull_cruiser_29,"tonnage(ca;30000), unlock(ca_4_italy;ca_3_rambow_france)"
+hull_cruiser_30,"tonnage(ca;31250), unlock(ca_3_friedrich;ca_3_warrior;ca_4_rambow_france;ca_5_usa_large1)"
+hull_cruiser_31,"tonnage(ca;32500), unlock(ca_5_usa_large2)"
+hull_cruiser_32,"tonnage(ca;33750), unlock(ca_3_generic;ca_3_german;ca_4_italy;ca_4_blucher;ca_4_ibuki;ca_4_generic_large;ca_4_generic_large_russia;ca_4_italy_stg;ca_3_averof_mod)"
+hull_cruiser_33,"tonnage(ca;35000), unlock(ca_4_rurik_russia)"
+hull_cruiser_34,tonnage(ca;36250)
+hull_cruiser_35,"tonnage(ca;37500), unlock( ca_5_france)"
+hull_cruiser_36,"tonnage(ca;40000), unlock(ca_5_gen_treaty;ca_5_german_treaty;ca_5_german_treaty_2;ca_5_armored_france;ca_5_russian_exp;ca_5_japan_exp_early;ca_5_generic2_C_class;ca_5_generic2_C_class;ca_5_generic1_C_class;ca_5_france_exp;ca_5_italian_early_condot)"
+hull_cruiser_37,"tonnage(ca;41250), unlock(ca_4_pensacola;ca_5_italy_early;ca_5_japan;ca_5_usa_heavy_treaty;ca_5_gen_treaty2;ca_5_small_generic)"
+hull_cruiser_38,"tonnage(ca;42500), unlock(ca_5_generic_2;ca_5_german_pocket;ca_5_generic;ca_5_german;ca_5_german_var;ca_5_italy;ca_5_italy;ca_5_generic_france;ca_5_british;ca_5_british_small;ca_5_austrian_pocket)"
+hull_cruiser_39,"tonnage(ca;45000), unlock(ca_5_gen;ca_5_spain_big;ca_6_britain;ca_5_russia)"
+hull_cruiser_40,"tonnage(ca;47500), unlock(cl_4_japan_torp;ca_5_german_pocket_big;ca_5_usa)"
+hull_cruiser_41,"tonnage(ca;50000), unlock(ca_5_german_hipper)"
+hull_cruiser_42,"tonnage(ca;52500), unlock(ca_6_japan;ca_7_japan;ca_5_japan_scout;ca_6_german_exp;cl_6_france;ca_5_wichita)"
+hull_cruiser_43,"unlock(ca_6_france), tonnage(ca;55000)"
+hull_cruiser_44,"unlock(ca_5_japan_exp;ca_6_italy;ca_5_russia_heavy;ca_6_desmoines1;ca_6_desmoines2;ca_5_generic_britain;ca_6_british_largecruiser;ca_6_commandcruiser_british;ca_8_japan;cl_6_cleveland;cl_6_monte_large), tonnage(ca;57500)"

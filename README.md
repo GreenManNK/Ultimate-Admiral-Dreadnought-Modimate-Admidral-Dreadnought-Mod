@@ -12,7 +12,8 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 
 - All hulls unlocked for all nations.
 - Hull obsolete gates removed; campaign start max year kept at 1950.
-- Hull tonnage limits raised to 250% of vanilla with a 300,000 ton cap; `tonnageMin` values are left unchanged and save ship displacement is not edited.
+- Hull base tonnage values restored to vanilla so already-built ship displacement is not rescaled.
+- Campaign tonnage unlock technology effects are raised to 250% of vanilla so new/refit design limits increase without editing built ship records.
 - Ship material/armor and equipment weight values are rebalanced separately so heavy armor, towers, funnels, barbettes, superstructure, conning towers, and torpedo protection consume less displacement without raising hull caps.
 - Speed setup weight relief: engine horsepower weight coefficient, high-speed multipliers, and horsepower-to-funnel-capacity demand are reduced so increasing knots does not consume displacement as aggressively.
 - Campaign retirement/end byte patch in `GameAssembly.dll` kept at compare year 2000.
@@ -29,7 +30,7 @@ It intentionally does not track `resources.assets`, `GameAssembly.dll`, or campa
 - Existing saves hotfixed so player ships under construction have at most 6 months remaining; AI build queues are not accelerated.
 - Existing saves hotfixed to remove AI ships still under construction and clean their task-force route references, reducing turn-processing load without touching player ships.
 - Existing saves hotfixed to sanitize task-force routes by removing stale or duplicate ship references without deleting valid ships.
-- Existing saves keep already-built ship displacement intact; raised hull caps affect new/refit design limits instead of rewriting built ships.
+- Existing saves keep already-built ship displacement intact; no save hull-size fields are rewritten for tonnage limits.
 - AI economy, aggression, tech, training, shipbuilding, invasion, refit, and research modifiers nerfed for campaign stability.
 - AI `TechMod(...)` bonuses removed from personalities.
 - Construction economy normalized: new-build time reduced further for visibility, repair cost reduced to vanilla, and distorted DIP material/weapon/ammo/fuel costs restored to stable baseline.
