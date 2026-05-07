@@ -173,6 +173,13 @@
     "player_build_remaining_cap_months": 6,
     "player_build_remaining_min_months": 1
   },
+  "save_player_hull_limit_hotfix": {
+    "source_file": "data/hull_tonnage_limit_250pct_cap300k.csv",
+    "field": "ship[15]",
+    "applies_to": "player surface/submarine ship records only",
+    "current_displacement_unchanged": true,
+    "ai_ship_records_unchanged": true
+  },
   "hull_tonnage_patch": {
     "hull_count": 518,
     "source_file": "data/hull_tonnage_limit_250pct_cap300k.csv",
