@@ -345,7 +345,7 @@ def remove_tech_tokens_by_type(value: str, invalid_types: set[str]) -> str:
 
 
 def load_hull_targets() -> dict[tuple[str, int], str]:
-    path = get_script_root() / "data" / "hull_tonnage_limit_400pct_cap400k.csv"
+    path = get_script_root() / "data" / "hull_tonnage_limit_250pct_cap300k.csv"
     if not path.exists():
         raise FileNotFoundError(path)
     targets = {}
