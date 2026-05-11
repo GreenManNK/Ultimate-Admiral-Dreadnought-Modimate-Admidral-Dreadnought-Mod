@@ -3,7 +3,7 @@
   "game_data_path": "F:\\SteamLibrary\\steamapps\\common\\Ultimate Admiral Dreadnoughts\\Ultimate Admiral Dreadnoughts_Data",
   "save_path": "C:\\Users\\NITRO\\AppData\\LocalLow\\Game Labs\\Ultimate Admiral Dreadnoughts",
   "protected_values": {
-    "shipyard_start": "12500",
+    "shipyard_start": "15000000",
     "shipyard_start_increase": "250",
     "shipyard_dev_cost": "30000",
     "shipyard_dev_min_amount_tons": "500",
@@ -11,7 +11,7 @@
     "shipyard_max_modifier": "6",
     "shipyard_build_amount_max_modifier": "8",
     "campaign_max_year": "1950",
-    "cash_start_part": "0.0035",
+    "cash_start_part": "1",
     "cash_start_randomness": "0",
     "ai_difficulty_easy_income_multiplier": "0.2",
     "ai_difficulty_normal_income_multiplier": "0.25",
@@ -172,6 +172,12 @@
     "player_build_remaining_factor": 0.25,
     "player_build_remaining_cap_months": 6,
     "player_build_remaining_min_months": 1
+  },
+  "new_campaign_major_start_values": {
+    "major_shipyardStart": "15000000",
+    "major_nation_base_income": "500000000000",
+    "cash_start_part": "1",
+    "note": "Static resources.assets data cannot distinguish human from AI at creation time; save hotfix still caps AI after a campaign is created."
   },
   "hull_tonnage_patch": {
     "hull_count": 518,

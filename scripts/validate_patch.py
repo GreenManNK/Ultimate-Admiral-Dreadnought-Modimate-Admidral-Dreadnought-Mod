@@ -115,7 +115,7 @@ def main():
     params = dict_rows(texts["params"])
     pd = {row.get("@name"): row.get("value") for row in params if row.get("@name")}
     required = {
-        "shipyard_start": "12500",
+        "shipyard_start": "15000000",
         "shipyard_start_increase": "250",
         "shipyard_dev_cost": "30000",
         "shipyard_dev_min_amount_tons": "500",
@@ -123,7 +123,7 @@ def main():
         "shipyard_max_modifier": "6",
         "shipyard_build_amount_max_modifier": "8",
         "campaign_max_year": "1950",
-        "cash_start_part": "0.0035",
+        "cash_start_part": "1",
         "cash_start_randomness": "0",
         "ai_difficulty_easy_income_multiplier": "0.2",
         "ai_difficulty_normal_income_multiplier": "0.25",
@@ -235,6 +235,17 @@ def main():
         actual = pd.get(key)
         if actual != expected:
             raise AssertionError(f"speed weight param {key}: expected {expected}, got {actual}")
+
+    player_rows = {row.get("@name"): row for row in dict_rows(texts["players"]) if data_name(row)}
+    for nation in MAJORS:
+        row = player_rows.get(nation)
+        if not row:
+            raise AssertionError(f"player row missing: {nation}")
+        if row.get("shipyardStart") != "15000000" or row.get("nation_base_income") != "500000000000":
+            raise AssertionError(
+                f"new-campaign player baseline {nation}: "
+                f"shipyardStart={row.get('shipyardStart')} income={row.get('nation_base_income')}"
+            )
 
     parts = dict_rows(texts["parts"])
     country_locked = 0
